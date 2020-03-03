@@ -1,17 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: yionr
-  Date: 2019/11/15
-  Time: 10:28
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
     <title>error</title>
 </head>
 <body>
-<h1 style="text-align: center">some thing wrong???</h1>
+<h1 style="text-align: center;color: red">文件提交过程中出现了问题</h1>
+<h3>以下是问题描述:</h3>
+<hr/>
 ${msg}
+<hr/>
+<h3>请将以上信息反馈给管理员,将在下个版本得到解决</h3>
 </body>
 </html>

@@ -50,5 +50,7 @@
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>fileupload.html</welcome-file>
+<!--    <welcome-file>bug.html</welcome-file>-->
   </welcome-file-list>
+
 </web-app>

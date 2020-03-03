@@ -11,7 +11,13 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 <!--开启mvc注解-->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 <!--    注解扫描-->
     <context:component-scan base-package="cloud.yionr">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

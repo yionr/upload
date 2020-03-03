@@ -2,146 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>fileupload</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body, form {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .file {
-            display: inline-block;
-            box-sizing: border-box;
-            width: 64%;
-            height: 50%;
-            position: relative;
-            left: 18%;
-            margin-top: 4%;
-            border: 5px gray dashed;
-            border-radius: 20px;
-        }
-
-        #file {
-            opacity: 0;
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        span {
-            display: inline-block;
-            user-select: none;
-            opacity: .3;
-            width: 240px;
-            height: 60px;
-            font-size: 16px;
-            text-align: center;
-            position: absolute;
-            left: calc(50% - 120px);
-            top: calc(50% - 30px);
-            z-index: -1;
-        }
-        #reset,#submit{
-            display: none;
-        }
-        .reset,.submit{
-            display: none;
-            width: 130px;
-            height: 60px;
-            border-radius: 10px;
-            border: 2px dashed pink;
-            margin-left: 50px;
-            text-align: center;
-            line-height: 60px;
-            font-size: 24px;
-            user-select: none;
-            cursor: pointer;
-            transition: .5s;
-        }
-        .reset:hover,.submit:hover{
-            background-color: pink;
-        }
-.function{
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-}
-    </style>
+    <title>交作业的地方!</title>
+    <link rel="stylesheet" href="css/upload.css" />
+    <script src="js/upload.js"></script>
 </head>
 <body>
-<!--目前有缓存问题,当上传成功直接返回的时候会有bug-->
-<form action="upload" method="post" enctype="multipart/form-data">
+<h1>软件工程3月3日课后作业</h1>
+<form class="upload" action="uploadHomework" method="post" enctype="multipart/form-data">
     <label>
-    <div class="file">
-        <input type="file" name="file" id="file">
-        <span>点击或直接拖拽文件至此</span>
-    </div>
+        <div class="file">
+            <input id="file" name="file" type="file" />
+            <input id="fileName" name="fileName" type="text" value="asdasd.xx" hidden />
+            <span>点击或直接拖拽文件至此</span>
+        </div>
     </label>
     <div class="function">
         <label>
-        <div class="submit">
-            <input type="submit" id="submit">
-            上传
-        </div>
+            <div class="submit">
+                <input type="submit" id="submit">
+                上传
+            </div>
         </label>
         <label>
-        <div class="reset">
-            <input type="reset" id="reset">
-            清空暂存区
-        </div>
+            <div class="reset">
+                <input type="reset" id="reset">
+                清空暂存区
+            </div>
         </label>
     </div>
 
 </form>
-<script>
-    window.onload = function () {
-        const file = document.getElementById("file");
-        const fileInfo = document.getElementsByTagName("span")[0];
-        const submit = document.getElementsByClassName("submit")[0];
-        const reset = document.getElementsByClassName("reset")[0];
-        let length;
-        let targetName = "";
-        file.onchange = function () {
-            length = file.value.split("\\").length;
-            targetName = file.value.split("\\")[length - 1];
-            console.log(targetName);
-            if (file.value.length === 0) {
-                fileInfo.innerText = "点击或直接拖拽文件至此";
-                submit.style.display = "none";
-                reset.style.display = "none";
-                return;
-            }
-            fileInfo.innerText = targetName + "\n即将被上传";
-            submit.style.display = "inline-block";
-            reset.style.display = "inline-block";
-        }
-        file.ondragenter = function () {
-            if (targetName !== "")
-                fileInfo.innerText = "释放以更改即将上传的文件！";
-            else
-                fileInfo.innerText = "释放以添加上传文件！";
-        }
-        file.ondragleave = function () {
-            if (targetName === "")
-                fileInfo.innerText = "点击或直接拖拽文件至此";
-            else {
-                fileInfo.innerText = targetName + "\n即将被上传";
-                submit.style.display = "inline-block";
-                reset.style.display = "inline-block";
-            }
-        }
-        reset.onclick = function () {
-            submit.style.display = "none";
-            reset.style.display = "none";
-            fileInfo.innerText = "点击或直接拖拽文件至此";
-        }
-    }
-</script>
+
+<table>
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td style="background-color: gray;">上香</td>
+        <td>6</td>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>12</td>
+        <td>13</td>
+        <td>14</td>
+        <td>15</td>
+        <td>16</td>
+        <td>17</td>
+        <td>18</td>
+        <td>19</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>21</td>
+        <td>22</td>
+        <td>23</td>
+        <td style="background-color: gray;">上香</td>
+        <td>25</td>
+        <td>26</td>
+        <td>27</td>
+        <td>28</td>
+        <td>29</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>20160805019</td>
+        <td>20160802004</td>
+    </tr>
+</table>
+
+
+<footer>
+    <span>©2017 yionr.cloud版权所有</span>
+    <a href="http://www.beian.miit.gov.cn">浙ICP备19047112号</a>
+    <span>联系QQ:2456011735</span>
+</footer>
 </body>
 </html>

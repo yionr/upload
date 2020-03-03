@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: yionr
-  Date: 2019/11/14
-  Time: 21:33
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
     <title>上传成功</title>
@@ -30,12 +23,18 @@
             text-align: center;
             font-size: 6rem;
         }
+        a{
+            display: block;
+            text-align: center;
+            font-size: 3rem;
+        }
     </style>
 </head>
 <body ondragstart="return false">
 <div>
-    <img src="img/success.png" alt="">
+    <img src="img/success.png" alt="" width="400px" height="400px">
 </div>
 <p>上传成功</p>
+<a href="http://upload.yionr.cloud">点此返回</a>
 </body>
 </html>
