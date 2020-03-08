@@ -4,81 +4,80 @@
     <meta charset="UTF-8">
     <title>交作业的地方!</title>
     <link rel="stylesheet" href="css/upload.css" />
+    <link rel="shortcut icon"type="image/x-icon" href="favicon.ico"media="screen" />
     <script src="js/upload.js"></script>
 </head>
 <body>
-<h1>软件工程3月3日课后作业</h1>
-<form class="upload" action="uploadHomework" method="post" enctype="multipart/form-data">
-    <label>
-        <div class="file">
-            <input id="file" name="file" type="file" />
-            <input id="fileName" name="fileName" type="text" value="asdasd.xx" hidden />
-            <span>点击或直接拖拽文件至此</span>
+<br>
+<h1 class="noSelect">软件工程3月3日课后作业</h1>
+
+<div class="uploadArea">
+    <form class="upload" action="uploadHomework" method="post" enctype="multipart/form-data">
+            <div class="file">
+                <input id="file" name="file" type="file" />
+                <input id="fileName" name="fileName" type="text" value="asdasd.xx" hidden />
+                <span class="noSelect">点击或直接拖拽文件至此</span>
+            </div>
+        <div class="function">
+            <label>
+                <div class="submit noSelect">
+                    <input type="submit" id="submit">
+                    上传
+                </div>
+            </label>
         </div>
-    </label>
-    <div class="function">
-        <label>
-            <div class="submit">
-                <input type="submit" id="submit">
-                上传
-            </div>
-        </label>
-        <label>
-            <div class="reset">
-                <input type="reset" id="reset">
-                清空暂存区
-            </div>
-        </label>
-    </div>
+    </form>
+</div>
 
-</form>
-
-<table>
-    <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td style="background-color: gray;">上香</td>
-        <td>6</td>
-        <td>7</td>
-        <td>8</td>
-        <td>9</td>
-        <td>10</td>
-    </tr>
-    <tr>
-        <td>11</td>
-        <td>12</td>
-        <td>13</td>
-        <td>14</td>
-        <td>15</td>
-        <td>16</td>
-        <td>17</td>
-        <td>18</td>
-        <td>19</td>
-        <td>20</td>
-    </tr>
-    <tr>
-        <td>21</td>
-        <td>22</td>
-        <td>23</td>
-        <td style="background-color: gray;">上香</td>
-        <td>25</td>
-        <td>26</td>
-        <td>27</td>
-        <td>28</td>
-        <td>29</td>
-        <td style="background-color: gray;">空缺</td>
-    </tr>
-    <tr>
-        <td>20160805019</td>
-        <td>20160802004</td>
-    </tr>
-</table>
-
+<div class="serverArea">
+    <h3 class="noSelect">如果下方对应位置被点亮,说明服务器已经存在此文件:</h3>
+    <br>
+    <table class="noSelect">
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td class="gray">上香</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+            <td class="gray">上香</td>
+            <td>25</td>
+            <td>26</td>
+            <td>27</td>
+            <td>28</td>
+            <td>29</td>
+            <td class="gray">空缺</td>
+        </tr>
+        <tr>
+            <td>20160805019</td>
+            <td>20160802004</td>
+        </tr>
+    </table>
+</div>
 
 <footer>
-    <span>©2017 yionr.cloud版权所有</span>
+    <span>©2020 yionr.cloud版权所有</span>
     <a href="http://www.beian.miit.gov.cn">浙ICP备19047112号</a>
     <span>联系QQ:2456011735</span>
 </footer>

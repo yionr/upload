@@ -3,8 +3,6 @@ window.onload = function () {
     const file = document.getElementById("file");
     const fileInfo = document.getElementsByTagName("span")[0];
     const submit = document.getElementsByClassName("submit")[0];
-    const reset = document.getElementsByClassName("reset")[0];
-    const show = document.getElementsByClassName("show")[0];
     let length;
     let targetName = "";
     let targetName_pre = "";
@@ -19,8 +17,9 @@ window.onload = function () {
         targetName_pre = targetName.split(".")[0];
         targetName_suf = "." + targetName.split(".")[1];
         if (targetName_suf === ".undefined"){
-            alert("不支持提交文件夹!请压缩后提交");
+            alert("不支持提交文件夹或无后缀文件!请压缩后提交");
             fileInfo.innerText = "点击或直接拖拽文件至此";
+            file.value = '';
             return false;
         }
         console.log(targetName);
@@ -29,7 +28,6 @@ window.onload = function () {
         if (file.value.length === 0) {
             fileInfo.innerText = "点击或直接拖拽文件至此";
             submit.style.display = "none";
-            reset.style.display = "none";
             return;
         }
         //校验上传的文件名,如果不正确的话,整改
@@ -55,7 +53,6 @@ window.onload = function () {
         document.getElementById("fileName").value = targetName;
         fileInfo.innerText = targetName + "\n即将被上传";
         submit.style.display = "inline-block";
-        reset.style.display = "inline-block";
     }
     file.ondragenter = function () {
         if (targetName !== "")
@@ -69,18 +66,8 @@ window.onload = function () {
         else {
             fileInfo.innerText = targetName + "\n即将被上传";
             submit.style.display = "inline-block";
-            reset.style.display = "inline-block";
         }
     }
-    reset.onclick = function () {
-        submit.style.display = "none";
-        reset.style.display = "none";
-        fileInfo.innerText = "点击或直接拖拽文件至此";
-    }
-    // show.onclick = function () {
-        // show.style.display = 'none';
-        // document.getElementsByTagName("table")[0].style.display = 'inline-block';
-
 }
 function getList() {
     var xmlHttp = new XMLHttpRequest();

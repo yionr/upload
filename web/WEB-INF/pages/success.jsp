@@ -35,6 +35,6 @@
     <img src="img/success.png" alt="" width="400px" height="400px">
 </div>
 <p>上传成功</p>
-<a href="http://upload.yionr.cloud">点此返回</a>
+<a href="https://upload.yionr.cloud">点此返回</a>
 </body>
 </html>
