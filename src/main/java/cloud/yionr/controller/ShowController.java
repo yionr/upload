@@ -15,10 +15,10 @@ public class ShowController {
         File file = new File(req.getServletContext().getRealPath("WEB-INF/homeWork"));
         File[] files = file.listFiles();
         ArrayList<String> arrayList = new ArrayList<>();
-        for (File fileitem :
+        for (File fileItem :
                 files) {
-            System.out.println(fileitem.getName());
-            arrayList.add(fileitem.getName());
+            System.out.println(fileItem.getName());
+            arrayList.add(fileItem.getName());
         }
         System.out.println(arrayList.toString());
         return arrayList.toString();

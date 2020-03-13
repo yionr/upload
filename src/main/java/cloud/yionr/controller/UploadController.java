@@ -4,15 +4,14 @@ import cloud.yionr.Exception.SysException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+//TODO 将文件根据第几次上传分类,实现所有用户所有作业归档,然后后期做一个可以查看历史上传的功能
 @Controller
 public class UploadController {
     @RequestMapping("/upload")
@@ -37,7 +36,7 @@ public class UploadController {
             throw new SysException(e.getMessage());
         }
 
-        return "success!";
+        return "success";
     }
     @RequestMapping("/uploadHomework")
     public String UploadGroupByTimes(MultipartFile file,HttpServletRequest req,@RequestParam("fileName") String fileName) throws SysException {
