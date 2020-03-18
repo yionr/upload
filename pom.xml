@@ -10,8 +10,7 @@
   <packaging>war</packaging>
 
   <name>upload.yionr.cloud Maven Webapp</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://upload.yionr.cloud</url>
+  <url>https://upload.yionr.cloud</url>
 
   <dependencies>
     <dependency>
