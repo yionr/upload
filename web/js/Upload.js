@@ -37,7 +37,7 @@ window.onload = function () {
         let reg_id = /^\d{2}$/;
         let reg_name = /^.{2,3}$/;
         //文件只要不是违法文件的话，都进行一次检测，防止学号姓名打错了的情况。
-        reviseFileName(targetName_pre);
+        reviseFileName(targetName_pre,targetName_suf);
 
 
 

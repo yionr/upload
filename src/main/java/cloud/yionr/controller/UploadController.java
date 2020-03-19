@@ -53,6 +53,7 @@ public class UploadController {
         //创建作业
         //FIXME 可能会出现前缀相同但是后缀不同的情况
         File homeWork = new File(CurrentWeekDir,fileName);
+        System.out.println(homeWork.getAbsolutePath());
         //TODO 用户拥有纠错的机会，重新上传，遇到同名文件时，比较两个文件大小，提供文件修改日期并提醒用户是否替换
         if (homeWork.exists())
             throw new SysException("服务器上已经存在此作业!");

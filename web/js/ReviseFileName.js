@@ -1,5 +1,5 @@
 //用到这个函数的地方，那就是命名有问题的。
-function reviseFileName(targetName_pre) {
+function reviseFileName(targetName_pre,targetName_suf) {
     let id = targetName_pre.match(/^\d+/);
     let name = targetName_pre.match(/\D{2,3}$/);
     let xmlHttp = new XMLHttpRequest();
@@ -20,7 +20,7 @@ function reviseFileName(targetName_pre) {
             }
             else{
             //    只要不是返回false，则将返回的内容直接作为文件名
-                filename.value = xmlHttp.responseText;
+                filename.value = xmlHttp.responseText + targetName_suf;
                 alert(filename.value);
                 //本来是显示xx即将被上传，并且显示上传按钮，现在能否直接上传呢？
                 // fileInfo.innerText = xmlHttp.responseText + "\n即将被上传";

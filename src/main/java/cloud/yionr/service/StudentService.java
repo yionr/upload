@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentService {
     @Autowired
-    StudentDao dao;
+    private StudentDao dao;
     public Student FindByName(String name){
         return dao.findByName(name);
     }

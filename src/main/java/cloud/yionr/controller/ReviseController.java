@@ -15,7 +15,7 @@ public class ReviseController {
     public String revise(String id,String name){
         System.out.println(id + "," + name);
         Student student = studentService.FindByName(name);
-        System.out.println(student);
+        System.out.println("hello!!!!!" + student);
         return student.getId().substring(9,11) + student.getName();
     }
 }
