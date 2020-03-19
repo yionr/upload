@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 //TODO 将文件根据第几次上传分类,实现所有用户所有作业归档,然后后期做一个可以查看历史上传的功能
@@ -41,21 +42,27 @@ public class UploadController {
     @RequestMapping("/uploadHomework")
     public String UploadGroupByTimes(MultipartFile file,HttpServletRequest req,@RequestParam("fileName") String fileName) throws SysException {
 
-//        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
-//        String fileName = multipartRequest.getParameter("fileName");
-        File f = new File(req.getServletContext().getRealPath("/WEB-INF/homeWork"));
-        if (!f.exists())
-            f.mkdirs();
-        File file1 = new File(f,fileName);
-        if (file1.exists())
-            throw new SysException("服务器上已经存在同名文件!");
+        //获取当前周（相对于开学）
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime baseDate = LocalDateTime.of(2020,3,1,0,0);
+        int weekNum = (now.getDayOfYear() - baseDate.getDayOfYear())/7 + 1;
+        //创建当前周的文件夹
+        File CurrentWeekDir = new File(req.getServletContext().getRealPath("/WEB-INF/homeWork/第" + weekNum + "周作业"));
+        if (!CurrentWeekDir.exists())
+            CurrentWeekDir.mkdirs();
+        //创建作业
+        //FIXME 可能会出现前缀相同但是后缀不同的情况
+        File homeWork = new File(CurrentWeekDir,fileName);
+        //TODO 用户拥有纠错的机会，重新上传，遇到同名文件时，比较两个文件大小，提供文件修改日期并提醒用户是否替换
+        if (homeWork.exists())
+            throw new SysException("服务器上已经存在此作业!");
         try {
-            file1.createNewFile();
-            file.transferTo(file1);
+            homeWork.createNewFile();
+            file.transferTo(homeWork);
             return "success";
         } catch (IOException e) {
             e.printStackTrace();
-            throw new SysException("上传失败!");
+            throw new SysException("在服务器上创建文件时遇到未知错误，上传失败!");
         }
     }
 

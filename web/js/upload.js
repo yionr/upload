@@ -1,7 +1,11 @@
 window.onload = function () {
-    getList();
+    //相对于开学，当前是第几周
+    let week = Math.floor(((new Date().getTime() - new Date(2020,2,1).getTime())/1000/3600/24 + 1) / 7 + 1);
+    document.getElementById("week").innerText = week;
+
+
     const file = document.getElementById("file");
-    const fileInfo = document.getElementsByTagName("span")[0];
+    const fileInfo = document.getElementById("fileInfo");
     const submit = document.getElementsByClassName("submit")[0];
     let length;
     let targetName = "";
@@ -38,6 +42,7 @@ window.onload = function () {
             if (targetName_pre.startsWith("2016")){
 
             }
+            //TODO 当文件被拖到上传框的时候，触发一次ajax，将文件名称拆分为 学号尾号部分 和 姓名部分 并传给服务器，请求查询数据库，从数据库返回信息，以名字为主要校验位，if名字无法匹配到，则提醒用户，手动输入学号姓名，if名字匹配到了，但是学号行尾号错了，返回给用户正确学号尾号以校对，当学号尾号正确，则直接触发上传，当不存在学号尾号，则自动为其添加学号
             else{
                 alert("文件命名格式不正确,请根据接下来的引导输入信息");
                 while(!reg_number.test(number))
@@ -66,47 +71,51 @@ window.onload = function () {
             fileInfo.innerText = targetName + "\n即将被上传";
             submit.style.display = "inline-block";
         }
-    }
-};
-function getList() {
-    let xmlHttp = new XMLHttpRequest();
-    xmlHttp.open('GET','show');
-    xmlHttp.send(null);
-    xmlHttp.onreadystatechange = function(){
-        let showList;
-        if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
-            let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
-            console.log(plist);
-            showList = plist.split(", ");
-            console.log(typeof showList);
-            console.log(showList);
-            //    至此,能将已交的人名单列出,存入showlist数组,每一项为xxxx.xxxx
-            //    然后做一个表格,点show的时候显示表格,把对应学号入位
-            //    我们班一共多少人来着....29 就当30把 表格要扁一点,so 3x10
-            for (let i = 0; i < showList.length; i++) {
-                if (showList[i].length < 15) {
-                    let sn = parseInt(showList[i].substring(0, 2)) - 1;
-                    let td = document.getElementsByTagName("td")[sn];
-                    td.innerText = showList[i];
-                    td.className = "green";
-                } else {
-                    if (showList[i].startsWith("20160802019")) {
-                        let td = document.getElementsByTagName("td")[30];
-                        td.innerText = showList[i];
-                        td.className = "green";
-                    }
-                    if (showList[i].startsWith("20160802004")) {
-                        let td = document.getElementsByTagName("td")[31];
-                        td.innerText = showList[i];
-                        td.className = "green";
-                    }
-                }
+    };
 
+    function getStatus() {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET','show');
+        xmlHttp.send(null);
+        xmlHttp.onreadystatechange = function(){
+            let showList;
+            if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
+                let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
+                // console.log(plist);
+                showList = plist.split(", ");
+                // console.log(typeof showList);
+                // console.log(showList);
+                //    至此,能将已交的人名单列出,存入showlist数组,每一项为xxxx.xxxx
+                //    然后做一个表格,点show的时候显示表格,把对应学号入位
+                //    我们班一共多少人来着....29 就当30把 表格要扁一点,so 3x10
+                for (let i = 0; i < showList.length; i++) {
+                    if (showList[i].length < 15) {
+                        let sn = parseInt(showList[i].substring(0, 2)) - 1;
+                        let td = document.getElementsByTagName("td")[sn];
+                        // console.log(sn);
+                        // console.log(td);
+                        td.innerText = showList[i];
+                        td.className = "green";
+                    } else {
+                        if (showList[i].startsWith("20160802019")) {
+                            let td = document.getElementsByTagName("td")[30];
+                            td.innerText = showList[i];
+                            td.className = "green";
+                        }
+                        if (showList[i].startsWith("20160802004")) {
+                            let td = document.getElementsByTagName("td")[31];
+                            td.innerText = showList[i];
+                            td.className = "green";
+                        }
+                    }
+
+                }
             }
         }
     }
-}
 
-//TODO 将用户数据存入数据库,提交的时候,提取名字对比数据库以实现自动纠正文件名
+    getStatus();
+};
+
 //TODO 上传添加动画
 //TODO 取消上传成功界面,文件拖到上传框触发动画,直接将文件上传,然后点亮(动画 就是 将上传框的文件移动到对应文件筐中去,然后点亮)
