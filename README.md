@@ -22,7 +22,7 @@ IDEA配置好tomcat,启动就行了吧...
 
 # 自定义
 
-`upload.js` 
+`Upload.js` 
 
 - 修改提交格式:把里面的正则修改一下即可
 

@@ -1,7 +1,7 @@
 package cloud.yionr.entity;
 
 //映射数据库中的每个用户,数据库里面保存每个name 以及对应的id
-public class User {
+public class Student {
     private String name;
     private String id;
 

@@ -4,21 +4,20 @@ window.onload = function () {
     document.getElementById("week").innerText = week;
 
 
-    const file = document.getElementById("file");
-    const fileInfo = document.getElementById("fileInfo");
-    const submit = document.getElementsByClassName("submit")[0];
+    file = document.getElementById("file");
+    fileInfo = document.getElementById("fileInfo");
+    // submit = document.getElementsByClassName("submit")[0];
+    filename = document.getElementById("fileName");
     let length;
     let targetName = "";
-    let targetName_pre = "";
-    let targetName_suf = "";
-    let number = "";
+    let id = "";
     let name = "";
     file.onchange = function () {
         // console.log(file.value);
         length = file.value.split("\\").length;
         targetName = file.value.split("\\")[length - 1];
-        targetName_pre = targetName.split(".")[0];
-        targetName_suf = "." + targetName.split(".")[1];
+        let targetName_pre = targetName.split(".")[0];
+        let targetName_suf = "." + targetName.split(".")[1];
         if (targetName_suf === ".undefined"){
             alert("不支持提交文件夹或无后缀文件!请压缩后提交");
             fileInfo.innerText = "点击或直接拖拽文件至此";
@@ -30,34 +29,49 @@ window.onload = function () {
         // console.log(targetName_suf);
         if (file.value.length === 0) {
             fileInfo.innerText = "点击或直接拖拽文件至此";
-            submit.style.display = "none";
+            // submit.style.display = "none";
             return;
         }
         //校验上传的文件名,如果不正确的话,整改
-        let reg = /^\d{2}.{2,3}$/; //格式必须为20170816109林鹏 学号必须是11位在前面 名字可以为两个字or三个字在后面
-        let reg_number = /^\d{2}$/;
+        let reg = /^\d{2}.{2,3}$/; //格式必须为'09林鹏' 学号必须是2位在前面 名字可以为两个字or三个字在后面
+        let reg_id = /^\d{2}$/;
         let reg_name = /^.{2,3}$/;
-        if (!reg.test(targetName_pre)){
-            //如果不是这个格式的,看看是不是另外两个,也不是的话教育他们,是的话通过
-            if (targetName_pre.startsWith("2016")){
+        //文件只要不是违法文件的话，都进行一次检测，防止学号姓名打错了的情况。
+        reviseFileName(targetName_pre);
 
-            }
-            //TODO 当文件被拖到上传框的时候，触发一次ajax，将文件名称拆分为 学号尾号部分 和 姓名部分 并传给服务器，请求查询数据库，从数据库返回信息，以名字为主要校验位，if名字无法匹配到，则提醒用户，手动输入学号姓名，if名字匹配到了，但是学号行尾号错了，返回给用户正确学号尾号以校对，当学号尾号正确，则直接触发上传，当不存在学号尾号，则自动为其添加学号
-            else{
-                alert("文件命名格式不正确,请根据接下来的引导输入信息");
-                while(!reg_number.test(number))
-                    number = prompt("请输入班内学号,是班内!懂?比如我是09:");
-                while(!reg_name.test(name))
-                    name = prompt("请输入姓名:");
-                targetName_pre = number + name;
-                targetName = targetName_pre + targetName_suf;
-            }
 
-        }
-        document.getElementById("fileName").value = targetName;
-        fileInfo.innerText = targetName + "\n即将被上传";
-        submit.style.display = "inline-block";
+
+        //
+        //
+        // //如果格式不对,触发ReviseFileName函数,如果revise也纠正不了的话，继续走流程
+        // // TODO 把流程修正一下， 之前是没有revise的， 有了revise之后，需要一些提示更新
+        // if (!reg.test(targetName_pre)){
+        //     //其实可以吧下面所有的内容都移到revisefilename里面去。
+        //
+        //     //--------------------------------------------------------
+        //     //看看是不是另外两个,也不是的话教育他们,是的话通过
+        //     if (targetName_pre.startsWith("2016")){
+        //
+        //     }
+        //     //TODO 当文件被拖到上传框的时候，触发一次ajax，将文件名称拆分为 学号尾号部分 和 姓名部分 并传给服务器，请求查询数据库，从数据库返回信息，以名字为主要校验位，if名字无法匹配到，则提醒用户，手动输入学号姓名，if名字匹配到了，但是学号行尾号错了，返回给用户正确学号尾号以校对，当学号尾号正确，则直接触发上传，当不存在学号尾号，则自动为其添加学号
+        //     else{
+        //         alert("文件命名格式不正确,请根据接下来的引导输入信息");
+        //         while(!reg_id.test(id))
+        //             id = prompt("请输入班内学号,是班内!懂?比如我是09:");
+        //         while(!reg_name.test(name))
+        //             name = prompt("请输入姓名:");
+        //         targetName_pre = id + name;
+        //         targetName = targetName_pre + targetName_suf;
+        //     }
+        //
+        // }
+        // filename.value = targetName;
+        // fileInfo.innerText = targetName + "\n即将被上传";
+        // submit.style.display = "inline-block";
+        //
     };
+
+
     file.ondragenter = function () {
         if (targetName !== "")
             fileInfo.innerText = "释放以更改即将上传的文件！";
@@ -69,7 +83,7 @@ window.onload = function () {
             fileInfo.innerText = "点击或直接拖拽文件至此";
         else {
             fileInfo.innerText = targetName + "\n即将被上传";
-            submit.style.display = "inline-block";
+            // submit.style.display = "inline-block";
         }
     };
 
