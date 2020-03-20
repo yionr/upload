@@ -17,7 +17,7 @@ import java.util.Date;
 @Controller
 public class UploadController {
 
-    private Logger logger = Logger.getLogger(ReviseController.class);
+    private Logger logger = Logger.getLogger(UploadController.class);
 
     @RequestMapping("/upload")
     public String UploadAndGroupByIP(MultipartFile file, HttpServletRequest request) throws SysException {
@@ -64,9 +64,9 @@ public class UploadController {
             throw new SysException("服务器上已经存在此作业!");
         try {
             homeWork.createNewFile();
-            logger.info("fileCreated!");
+            logger.info("serverFileCreated!");
             file.transferTo(homeWork);
-            logger.info("fileTransferSuccess!");
+            logger.info("serverFileTransferSuccess!");
             return "success";
         } catch (IOException e) {
             e.printStackTrace();

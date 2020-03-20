@@ -12,8 +12,12 @@ public class ReviseController {
 //    考虑不转发给客户端，直接在服务器内相互转发。
     @Autowired
     StudentService studentService;
+
+    private Logger logger = Logger.getLogger(ReviseController.class);
+
     @RequestMapping("revise")
-    public String revise(String id,String name){
+    public String revise(String id,String name,String oFName){
+        logger.info("file start revise,originFileName is: " + oFName);
         /*
         * 首先，根据提交的id 和name 来分组
         * 1. 完全没有任何有用信息的，比如asdassdiqod.xxx 多见于发图片

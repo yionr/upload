@@ -35,6 +35,7 @@
     <img src="img/success.png" alt="" width="400px" height="400px">
 </div>
 <p>上传成功</p>
-<a href="http://localhost:8080/upload_war">点此返回</a>
+<%--<a href="https://upload.yionr.cloud">点此返回</a>--%>
+<a href="http://localhost:8080:upload_war">点此返回</a>
 </body>
 </html>

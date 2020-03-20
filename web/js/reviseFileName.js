@@ -9,7 +9,8 @@ function reviseFileName(targetName_pre,targetName_suf) {
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST","revise");
     xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    xmlHttp.send("id=" + id + "&name=" + name);
+    //将原始文件名也发给服务器，方便以后增加内容
+    xmlHttp.send("id=" + id + "&name=" + name + "&oFName=" + targetName_pre + targetName_suf);
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
             if (xmlHttp.responseText === 'false'){
