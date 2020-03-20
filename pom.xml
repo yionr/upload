@@ -9,7 +9,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>upload Maven Webapp</name>
+  <name>upload</name>
   <url>https://upload.yionr.cloud</url>
 
   <dependencies>
@@ -132,7 +132,8 @@
   </dependencies>
 
   <build>
-    <finalName>upload.yionr.cloud</finalName>
+<!--    这里能控制生成的war文件的名称-->
+    <finalName>upload</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
