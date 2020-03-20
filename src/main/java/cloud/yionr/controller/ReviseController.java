@@ -2,6 +2,7 @@ package cloud.yionr.controller;
 
 import cloud.yionr.entity.Student;
 import cloud.yionr.service.StudentService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,6 @@ public class ReviseController {
         *
         *
         * */
-        System.out.println(id + "," + name);
         Student student = studentService.FindByName(name);
         if (student == null)
             return "false";

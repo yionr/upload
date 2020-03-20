@@ -27,7 +27,8 @@ function reviseFileName(targetName_pre,targetName_suf) {
                 if (confirm(name + "的学号为：" + xmlHttp.responseText +"\n而您输入的学号为：" + id + "，是否纠正？")){
                     if (xmlHttp.responseText.startsWith("2016"))
                         targetName_pre = xmlHttp.responseText + name;
-                    targetName_pre = xmlHttp.responseText.substring(9,11) + name;
+                    else
+                        targetName_pre = xmlHttp.responseText.substring(9,11) + name;
                 }
 
                 else{

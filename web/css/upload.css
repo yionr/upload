@@ -18,6 +18,26 @@ h1{
     text-align: center;
 }
 
+a{
+    text-decoration: none;
+}
+
+.github{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: inline-block;
+    font-size: 32px;
+    color: gray;
+    font-weight: bold;
+    letter-spacing: 5px;
+    line-height: 32px;
+}
+.github img{
+    display: inline-block;
+    vertical-align: top;
+}
+
 .uploadArea{
     height: 55%;
 }

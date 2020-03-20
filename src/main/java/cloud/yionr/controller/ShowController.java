@@ -22,10 +22,8 @@ public class ShowController {
         ArrayList<String> arrayList = new ArrayList<>();
         for (File fileItem :
                 files) {
-            System.out.println(fileItem.getName());
             arrayList.add(fileItem.getName());
         }
-//        System.out.println(arrayList.toString());
         return arrayList.toString();
     }
 }

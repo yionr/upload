@@ -1,6 +1,7 @@
 package cloud.yionr.controller;
 
 import cloud.yionr.Exception.SysException;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,9 @@ import java.util.Date;
 //TODO 将文件根据第几次上传分类,实现所有用户所有作业归档,然后后期做一个可以查看历史上传的功能
 @Controller
 public class UploadController {
+
+    private Logger logger = Logger.getLogger(ReviseController.class);
+
     @RequestMapping("/upload")
     public String UploadAndGroupByIP(MultipartFile file, HttpServletRequest request) throws SysException {
         File f = new File(request.getServletContext().getRealPath("/WEB-INF/Content"));
@@ -42,6 +46,8 @@ public class UploadController {
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException {
 
+        logger.info("submit a file>>> ip: " + req.getRemoteAddr() + ">>>fileName: " + fileName);
+
         //获取当前周（相对于开学）
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime baseDate = LocalDateTime.of(2020,3,1,0,0);
@@ -53,7 +59,6 @@ public class UploadController {
         //创建作业
         //FIXME 可能会出现前缀相同但是后缀不同的情况
         File homeWork = new File(CurrentWeekDir,fileName);
-        System.out.println(homeWork.getAbsolutePath());
         //TODO 用户拥有纠错的机会，重新上传，遇到同名文件时，比较两个文件大小，提供文件修改日期并提醒用户是否替换
         if (homeWork.exists())
             throw new SysException("服务器上已经存在此作业!");

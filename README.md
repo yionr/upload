@@ -20,5 +20,8 @@
 
 
 # 部署方法
-clone项目，然后在src/main/resources下创建一个db.properties文件，确定连接数据库的几个参数
-数据库两个字段 varchar id 和 varchar name 代表学生学号和姓名
+- 需要自己写两个文件`db.properties`和`log4j.properties`
+
+- 数据库设计： 两个字段 `varchar id primarykey` `varchar name`
+
+- 修改success.jsp 把地址改为自己的网址
