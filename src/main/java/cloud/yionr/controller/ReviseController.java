@@ -25,17 +25,32 @@ public class ReviseController {
         *
         * */
         Student student = studentService.FindByName(name);
+//        如果根据姓名找到了这个学生的话，进一步判断正确学号
+        if (student != null){
+            //如果学生输入的学号和正确的学号不一致，则返回正确学号，提醒用户
+            if (id.length() == 11){
+                if (!student.getId().equals(id))
+                    return student.getId();
+            }
+            if (id.length() == 2){
+                if (!student.getId().substring(9,11).equals(id))
+                    return student.getId().substring(9,11);
+            }
+        }
+//        如果姓名无法识别，则根据学号来查找
+        // TODO 根据学号来找，同时进一步确认姓名是否正确...我觉得这个应该可以不用做了，因为无法做到完美识别姓名，做上这个的话可能会很尴尬
+//        FIXME findbylastid无法适用于16级
+        else{
+            if (id.length() == 11)
+                student = studentService.FindById(id);
+            else if (id.length() == 2)
+                student = studentService.FindByLastId("2017%" + id);
+        }
+//        如果到这还没有找到的话，就说明，这个文件名，不是以学号开头，也不是以姓名结尾的，暂时无法处理
         if (student == null)
             return "false";
-//        如果学生输入的学号和正确的学号不一致，则返回正确学号，提醒用户
-        if (id.length() == 11){
-            if (!student.getId().equals(id))
-                return student.getId();
-        }
-        if (id.length() == 2){
-            if (!student.getId().substring(9,11).equals(id))
-                return student.getId().substring(9,11);
-        }
+
+//        能到这里，表示找到了学生，并且它的学号没有填错
 //        如果是16级的学生
         if (student.getId().startsWith("2016"))
             return student.getId() + student.getName();

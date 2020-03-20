@@ -46,7 +46,7 @@ public class UploadController {
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException {
 
-        logger.info("submit a file>>> ip: " + req.getRemoteAddr() + ">>>fileName: " + fileName);
+        logger.info("try to submit a file>>> ip: " + req.getRemoteAddr() + ">>>fileName: " + fileName);
 
         //获取当前周（相对于开学）
         LocalDateTime now = LocalDateTime.now();
@@ -64,12 +64,15 @@ public class UploadController {
             throw new SysException("服务器上已经存在此作业!");
         try {
             homeWork.createNewFile();
+            logger.info("fileCreated!");
             file.transferTo(homeWork);
+            logger.info("fileTransferSuccess!");
             return "success";
         } catch (IOException e) {
             e.printStackTrace();
             throw new SysException("在服务器上创建文件时遇到未知错误，上传失败!");
         }
+
     }
 
 }

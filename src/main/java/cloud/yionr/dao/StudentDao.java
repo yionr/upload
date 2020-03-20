@@ -12,6 +12,7 @@ public interface StudentDao {
     Student findByName(String name);
     @Select("select * from student where id=#{id}")
     Student findById(String id);
-    @Select("select * from student where id=#{lastId}")
+//    这里有可能会出问题
+    @Select("select * from student where id like #{lastId}")
     Student findByLastId(String lastId);
 }
