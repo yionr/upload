@@ -57,7 +57,7 @@ public class UploadController {
         if (!CurrentWeekDir.exists())
             CurrentWeekDir.mkdirs();
         //创建作业
-        //FIXME 可能会出现前缀相同但是后缀不同的情况
+        //FIXME 可能会出现前缀相同但是后缀不同的情况，但是这种情况即使提交了，也不会覆盖原文件，阻止用户二次提交相同文件的本意是防止被别的用户乱搞
         File homeWork = new File(CurrentWeekDir,fileName);
         //TODO 用户拥有纠错的机会，重新上传，遇到同名文件时，比较两个文件大小，提供文件修改日期并提醒用户是否替换
         if (homeWork.exists())

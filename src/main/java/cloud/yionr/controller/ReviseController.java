@@ -42,7 +42,7 @@ public class ReviseController {
             }
         }
 //        如果姓名无法识别，则根据学号来查找
-        // TODO 根据学号来找，同时进一步确认姓名是否正确...我觉得这个应该可以不用做了，因为无法做到完美识别姓名，做上这个的话可能会很尴尬
+        // TODO 根据学号来找，同时进一步确认姓名是否正确...我觉得这个应该可以暂时不用做了，因为无法做到完美识别姓名，做上这个的话可能会很尴尬
 //        FIXME findbylastid无法适用于16级
         else{
             if (id.length() == 11)
@@ -62,3 +62,5 @@ public class ReviseController {
         return student.getId().substring(9,11) + student.getName();
     }
 }
+
+//TODO 作业密码机制，用户第一次提交作业的时候，需要输入一个密码，以后每次提交作业都需要输入这个密码，防止别的用户乱提交导致麻烦我
