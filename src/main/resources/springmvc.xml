@@ -32,7 +32,7 @@
 <!--    上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 <!--        所有上传内容总和不能超过1G-->
-        <property name="maxUploadSize" value="1000000" />
+        <property name="maxUploadSize" value="1000000000" />
     </bean>
 <!--    资源过滤-->
     <mvc:resources mapping="/img/**" location="/img/" />
