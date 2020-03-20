@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ReviseController {
+//    考虑不转发给客户端，直接在服务器内相互转发。
     @Autowired
     StudentService studentService;
     @RequestMapping("revise")
