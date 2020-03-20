@@ -6,7 +6,6 @@ window.onload = function () {
 
     file = document.getElementById("file");
     fileInfo = document.getElementById("fileInfo");
-    // submit = document.getElementsByClassName("submit")[0];
     filename = document.getElementById("fileName");
     let length;
     let targetName = "";
@@ -32,11 +31,11 @@ window.onload = function () {
             // submit.style.display = "none";
             return;
         }
-        //校验上传的文件名,如果不正确的话,整改
-        let reg = /^\d{2}.{2,3}$/; //格式必须为'09林鹏' 学号必须是2位在前面 名字可以为两个字or三个字在后面
-        let reg_id = /^\d{2}$/;
-        let reg_name = /^.{2,3}$/;
-        //文件只要不是违法文件的话，都进行一次检测，防止学号姓名打错了的情况。
+        // //校验上传的文件名,如果不正确的话,整改
+        // let reg = /^\d{2}.{2,3}$/; //格式必须为'09林鹏' 学号必须是2位在前面 名字可以为两个字or三个字在后面
+        // let reg_id = /^\d{2}$/;
+        // let reg_name = /^.{2,3}$/;
+        // //文件只要不是违法文件的话，都进行一次检测，防止学号姓名打错了的情况。
         reviseFileName(targetName_pre,targetName_suf);
 
 

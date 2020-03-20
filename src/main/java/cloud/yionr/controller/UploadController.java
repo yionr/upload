@@ -40,7 +40,7 @@ public class UploadController {
         return "success";
     }
     @RequestMapping("/uploadHomework")
-    public String UploadGroupByTimes(MultipartFile file,HttpServletRequest req,@RequestParam("fileName") String fileName) throws SysException {
+    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException {
 
         //获取当前周（相对于开学）
         LocalDateTime now = LocalDateTime.now();

@@ -10,4 +10,8 @@ import java.util.List;
 public interface StudentDao {
     @Select("select * from student where name=#{name}")
     Student findByName(String name);
+    @Select("select * from student where id=#{id}")
+    Student findById(String id);
+    @Select("select * from student where id=#{lastId}")
+    Student findByLastId(String lastId);
 }

@@ -1,6 +1,5 @@
 package cloud.yionr.controller;
 
-import cloud.yionr.dao.StudentDao;
 import cloud.yionr.entity.Student;
 import cloud.yionr.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,12 @@ public class ReviseController {
     public String revise(String id,String name){
         System.out.println(id + "," + name);
         Student student = studentService.FindByName(name);
-        System.out.println("hello!!!!!" + student);
+        if (student == null)
+            return "false";
+//        如果是16级的学生
+        if (student.getId().startsWith("2016"))
+            return student.getId() + student.getName();
+//        不是16级的话
         return student.getId().substring(9,11) + student.getName();
     }
 }
