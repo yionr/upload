@@ -1,7 +1,7 @@
 window.onload = function () {
 
     //补充标题
-    document.getElementById("week").innerText = getWeek(new Date(2020,2,1).getTime()) + "";
+    document.getElementById("week").innerText = getWeek(new Date(2020,2,3).getTime()) + "";
 
     //input file标签
     let file = document.getElementById("file");
