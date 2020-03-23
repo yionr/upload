@@ -14,7 +14,7 @@ public class ShowController {
     public String show(HttpServletRequest req){
         //获取当前周（相对于开学）
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime baseDate = LocalDateTime.of(2020,3,1,0,0);
+        LocalDateTime baseDate = LocalDateTime.of(2020,3,4,0,0);
 //        +1 参考upload
         int weekNum = (now.getDayOfYear() + 1 - baseDate.getDayOfYear())/7 + 1;
 
