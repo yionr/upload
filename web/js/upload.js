@@ -1,8 +1,8 @@
 window.onload = function () {
     //不属于提交作业的时间，不展开上传框
-    if (true){
-        let uploadArea = document.getElementsByClassName("uploadArea")[0];
-        uploadArea.style.height = '55%';
+    if (!isWorkingDay()){
+        openUploadEntrance();
+        openDeadLine();
     }
 
     //补充标题
