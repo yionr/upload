@@ -16,3 +16,16 @@ function getAjaxConnection(method,url,readyFunc){
 function getWeek(startDate){
     return Math.floor(((new Date().getTime() - startDate)/1000/3600/24 + 1) / 7 + 1);
 }
+
+
+function isWorkingDay() {
+    let date = new Date();
+    let weekDay = date.getDay();
+    if (weekDay === 5)
+        if (date.getHours() >= 12)
+            return false;
+
+    if (weekDay === 6 || weekDay === 7 || weekDay === 1)
+        return false;
+    return true;
+}

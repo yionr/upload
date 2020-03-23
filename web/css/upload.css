@@ -39,7 +39,8 @@ a{
 }
 
 .uploadArea{
-    height: 55%;
+    height: 0;
+    transition: 1s;
 }
 
 .file {

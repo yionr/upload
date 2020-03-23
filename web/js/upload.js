@@ -1,7 +1,12 @@
 window.onload = function () {
+    //不属于提交作业的时间，不展开上传框
+    if (true){
+        let uploadArea = document.getElementsByClassName("uploadArea")[0];
+        uploadArea.style.height = '55%';
+    }
 
     //补充标题
-    document.getElementById("week").innerText = getWeek(new Date(2020,2,3).getTime()) + "";
+    document.getElementById("week").innerText = getWeek(new Date(2020,2,4,8,0,0,0).getTime()) + "";
 
     //input file标签
     let file = document.getElementById("file");
