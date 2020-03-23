@@ -1,6 +1,6 @@
 window.onload = function () {
     //不属于提交作业的时间，不展开上传框
-    if (!isWorkingDay()){
+    if (isWorkingDay()){
         openUploadEntrance();
         openDeadLine();
     }

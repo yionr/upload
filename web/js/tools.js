@@ -78,7 +78,7 @@ function openDeadLine() {
     }
 
     //test
-    lastDays = lastHours = 0;
+    // lastDays = lastHours = 0;
     // lastDays = lastHours = lastMinuts = 0;
 
     //设置 fn 和 sn 的初始数值
