@@ -99,7 +99,7 @@ function openDeadLine() {
                 if (parseInt(sn.innerText) === -1){
                     if (parseInt(fn.innerText) > 0){
                         fn.innerText = parseInt(fn.innerText) - 1;
-                        sn.innerText = '59';
+                        sn.innerText = '23';
                     }
                     else{
                         fn.innerText = '';
