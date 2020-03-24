@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+
 @RestController
 public class ReviseController {
 //    考虑不转发给客户端，直接在服务器内相互转发。
@@ -17,6 +20,20 @@ public class ReviseController {
 
     @RequestMapping("revise")
     public String revise(String id,String name,String oFName){
+
+        LocalDateTime now = LocalDateTime.now();
+        DayOfWeek weekDay = now.getDayOfWeek();
+        if (weekDay == DayOfWeek.FRIDAY) {
+            if (now.getHour() >= 12) {
+                logger.info("this file submit request is not in time: " + oFName);
+                return "over";
+            }
+        }
+        if (weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY || weekDay == DayOfWeek.MONDAY){
+            logger.info("this file submit request is not in time: " + oFName);
+            return "over";
+        }
+
         logger.info("file start revise,originFileName is: " + oFName);
         /*
         * 首先，根据提交的id 和name 来分组

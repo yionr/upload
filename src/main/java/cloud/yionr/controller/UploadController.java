@@ -19,30 +19,6 @@ public class UploadController {
 
     private Logger logger = Logger.getLogger(UploadController.class);
 
-    @RequestMapping("/upload")
-    public String UploadAndGroupByIP(MultipartFile file, HttpServletRequest request) throws SysException {
-        File f = new File(request.getServletContext().getRealPath("/WEB-INF/Content"));
-        File f1 = new File(f,request.getRemoteAddr().replace(":",""));
-        if (!f1.exists()) {
-            if (!f.exists())
-                f.mkdirs();
-            f1.mkdirs();
-        }
-        File f2 = new File(f1,file.getOriginalFilename());
-        //当用户上传过了相同的文件时,之前的文件也保留,改名目前上传的文件
-        if (f2.exists()){
-            f2 = new File(f1,new Date().getTime() + file.getOriginalFilename());
-        }
-
-        try {
-            f2.createNewFile();
-            file.transferTo(f2);
-        } catch (IOException e) {
-            throw new SysException(e.getMessage());
-        }
-
-        return "success";
-    }
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException {
 
@@ -51,9 +27,11 @@ public class UploadController {
         //获取当前周（相对于开学）
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime baseDate = LocalDateTime.of(2020,3,1,0,0);
-        int weekNum = (now.getDayOfYear() - baseDate.getDayOfYear())/7 + 1;
+//        这里加上1 ： 原本是21-1 = 20 /7 = 2 导致21号归档到第三周 而22号归档到第四周，加上一偏移之后，周次正确
+        int weekNum = (now.getDayOfYear() + 1 - baseDate.getDayOfYear())/7 + 1;
         //创建当前周的文件夹
-        File CurrentWeekDir = new File(req.getServletContext().getRealPath("/WEB-INF/homeWork/第" + weekNum + "周作业"));
+//        File CurrentWeekDir = new File(req.getServletContext().getRealPath("/WEB-INF/homeWork/第" + weekNum + "周作业"));
+        File CurrentWeekDir = new File("/root/homeWork/" + weekNum);
         if (!CurrentWeekDir.exists())
             CurrentWeekDir.mkdirs();
         //创建作业

@@ -1,7 +1,13 @@
 window.onload = function () {
+    //不属于提交作业的时间，不展开上传框
+    if (isWorkingDay()){
+        openUploadEntrance();
+        openDeadLine();
+    }
+    //TODO 其实这里还可以做一个 计时器，时间到了展开上传框的动画效果，但是其实没太大必要
 
     //补充标题
-    document.getElementById("week").innerText = getWeek(new Date(2020,2,1).getTime()) + "";
+    document.getElementById("week").innerText = getWeek(new Date(2020,2,4,8,0,0,0).getTime()) + "";
 
     //input file标签
     let file = document.getElementById("file");

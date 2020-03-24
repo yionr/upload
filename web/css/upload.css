@@ -38,8 +38,28 @@ a{
     vertical-align: top;
 }
 
+.deadline{
+    z-index: -1;
+    opacity: 0;
+    font-size: 32px;
+    text-align: center;
+    line-height: 64px;
+    width: 192px;
+    height: 64px;
+    position: absolute;
+    right: 10px;
+    top: 60px;
+    background-color: greenyellow;
+    transition: 1s;
+}
+
+.deadline div{
+    display: inline-block;
+}
+
 .uploadArea{
-    height: 55%;
+    height: 0;
+    transition: 1s;
 }
 
 .file {
