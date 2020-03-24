@@ -56,40 +56,6 @@ window.onload = function () {
         }
     };
 
-    //根据服务器存在的文件填充人员名单
-    (function getStatus() {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.open('GET','show');
-        xmlHttp.send(null);
-        xmlHttp.onreadystatechange = function(){
-            let showList;
-            if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
-                let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
-                showList = plist.split(", ");
-                for (let i = 0; i < showList.length; i++) {
-                    if (showList[i].length < 15) {
-                        let sn = parseInt(showList[i].substring(0, 2)) - 1;
-                        let td = document.getElementsByTagName("td")[sn];
-                        td.innerText = showList[i];
-                        td.className = "green";
-                    } else {
-                        if (showList[i].startsWith("20160802019")) {
-                            let td = document.getElementsByTagName("td")[30];
-                            td.innerText = showList[i];
-                            td.className = "green";
-                        }
-                        if (showList[i].startsWith("20160802004")) {
-                            let td = document.getElementsByTagName("td")[31];
-                            td.innerText = showList[i];
-                            td.className = "green";
-                        }
-                    }
-
-                }
-            }
-        }
-    })();
-
 };
 
 //TODO 上传添加动画
