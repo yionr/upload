@@ -21,6 +21,8 @@ public class ShowController {
         //根据得到的周次去服务器里面查询指定文件夹，如果不存在（指定周还没有人上传，但是有人查询）则创建文件夹
 //        File file = new File(req.getServletContext().getRealPath("WEB-INF/homeWork/第" + weekNum + "周作业"));
         File file = new File("/root/homeWork/" + weekNum);
+//        测试专用地址
+//        File file = new File("/Users/Yionr/homeWork/" + weekNum);
         if (!file.exists())
             file.mkdirs();
         //不断读文件夹里面的文件,每读一个提取文件名放入数组
