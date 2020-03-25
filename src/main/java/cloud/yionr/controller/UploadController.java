@@ -43,7 +43,9 @@ public class UploadController {
         logger.info("fileName_suf: " + fileName_suf + " id: " + id + " name: " + name + "   searched: " + student);
         if (!(student == null)) {
 //            这里要分两种情况，学号2位和11位
-            if (!student.getId().equals(id) && !student.getId().substring(9).equals(id)) {
+            if ((name.equals("吴伟") || name.equals("胡凯伦")) && !student.getId().equals(id))
+                throw new IdNotMatchException("姓名学号不匹配，请重试！");
+            else if (!student.getId().substring(9).equals(id)) {
                 throw new IdNotMatchException("姓名学号不匹配，请重试！");
             } else {
                 //获取当前周（相对于开学）
@@ -53,9 +55,9 @@ public class UploadController {
 //              这里加上1 ： 原本是21-1 = 20 /7 = 2 导致21号归档到第三周 而22号归档到第四周，加上一偏移之后，周次正确
                 int weekNum = (now.getDayOfYear() + 1 - baseDate.getDayOfYear()) / 7 + 1;
                 //创建当前周的文件夹
-                File CurrentWeekDir = new File("/root/homeWork/" + weekNum);
+//                File CurrentWeekDir = new File("/root/homeWork/" + weekNum);
                 //测试环境下用下面地址
-//                File CurrentWeekDir = new File("/Users/Yionr/homeWork/" + weekNum);
+                File CurrentWeekDir = new File("/Users/Yionr/homeWork/" + weekNum);
                 if (!CurrentWeekDir.exists())
                     CurrentWeekDir.mkdirs();
                 //创建作业
