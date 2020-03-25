@@ -83,8 +83,6 @@ function openDeadLine() {
 
     //设置 fn 和 sn 的初始数值
 
-    //FIXME 不过如果我用if来做这个事情的话，到分界点他好像没法自动切换，后期改正吧
-
     //不能这么用interval，他不是从现在开始的，
     if (lastDays > 0){
         fu.innerText = '天';

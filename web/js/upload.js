@@ -4,7 +4,6 @@ window.onload = function () {
         openUploadEntrance();
         openDeadLine();
     }
-    //TODO 其实这里还可以做一个 计时器，时间到了展开上传框的动画效果，但是其实没太大必要
 
     //补充标题
     document.getElementById("week").innerText = getWeek(new Date(2020,2,4,8,0,0,0).getTime()) + "";
@@ -57,7 +56,3 @@ window.onload = function () {
     };
 
 };
-
-//TODO 上传添加动画
-//TODO 取消上传成功界面,文件拖到上传框触发动画,直接将文件上传,然后点亮(动画 就是 将上传框的文件移动到对应文件筐中去,然后点亮)
-// 做动画成本有点高。。以后太闲的时候再说吧！
