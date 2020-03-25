@@ -96,6 +96,7 @@ a{
     width: 150px;
     height: 150px;
     background-color: antiquewhite;
+    padding: 10px;
     transition: .5s;
 }
 .tipPad{
@@ -109,6 +110,8 @@ a{
     width: 20px;
     height: 50px;
     border: 1px solid red;
+    line-height: 25px;
+    text-align: center;
     cursor: pointer;
 }
 
