@@ -1,9 +1,7 @@
 function reviseFileName(targetName_pre,targetName_suf) {
     //去除所有的空格
     targetName_pre = targetName_pre.replace(/ /g,"");
-    //FIXME 将开头开始的连续数字作为学号
     let id = targetName_pre.match(/^\d+/);
-    //FIXME 将结尾之前的两到三个非数字字符作为姓名 目前暂时只有这一个匹配姓名的方法， 后续增加别的
     let name = targetName_pre.match(/\D{2,3}$/);
 
     let xmlHttp = new XMLHttpRequest();
@@ -16,7 +14,7 @@ function reviseFileName(targetName_pre,targetName_suf) {
             if (xmlHttp.responseText === 'false'){
                 alert("无法识别文件归属，请根据提示输入学号，姓名：");
                 let fixId = "",fixName="";
-                while(!(/^\d{2}$/.test(fixId)) && !(/^20160805019$/.test(fixId)) && !(/^20160802004$/.test(fixId)))
+                while(!(/^\d{2}$/.test(fixId)) && !(/^20160802019$/.test(fixId)) && !(/^20160802004$/.test(fixId)))
                     fixId = prompt("请输入学号尾号（16级的请输入完整学号）:");
                 while(!(/^\D{2,3}$/.test(fixName)))
                     fixName = prompt("请输入姓名：");
