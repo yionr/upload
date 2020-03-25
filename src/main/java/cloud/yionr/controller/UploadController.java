@@ -3,6 +3,7 @@ package cloud.yionr.controller;
 import cloud.yionr.Exception.IdNotMatchException;
 import cloud.yionr.Exception.StudentNotFoundException;
 import cloud.yionr.Exception.SysException;
+import cloud.yionr.common.DateTool;
 import cloud.yionr.entity.Student;
 import cloud.yionr.service.StudentService;
 import org.apache.log4j.Logger;
@@ -20,11 +21,13 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//TODO 做一个可以查看历史上传的功能
 @Controller
 public class UploadController {
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    DateTool dateTool;
 
     private Logger logger = Logger.getLogger(UploadController.class);
 
@@ -43,27 +46,20 @@ public class UploadController {
         logger.info("fileName_suf: " + fileName_suf + " id: " + id + " name: " + name + "   searched: " + student);
         if (!(student == null)) {
 //            这里要分两种情况，学号2位和11位
+//            11位不要标出来，主要应对的是'19吴伟'这种情况
             if ((name.equals("吴伟") || name.equals("胡凯伦")) && !student.getId().equals(id))
                 throw new IdNotMatchException("姓名学号不匹配，请重试！");
-            else if (!student.getId().substring(9).equals(id)) {
+            else if (id.length() == 2 && !student.getId().substring(9).equals(id)) {
                 throw new IdNotMatchException("姓名学号不匹配，请重试！");
             } else {
-                //获取当前周（相对于开学）
-
-                LocalDateTime now = LocalDateTime.now();
-                LocalDateTime baseDate = LocalDateTime.of(2020, 3, 1, 0, 0);
-//              这里加上1 ： 原本是21-1 = 20 /7 = 2 导致21号归档到第三周 而22号归档到第四周，加上一偏移之后，周次正确
-                int weekNum = (now.getDayOfYear() + 1 - baseDate.getDayOfYear()) / 7 + 1;
                 //创建当前周的文件夹
-//                File CurrentWeekDir = new File("/root/homeWork/" + weekNum);
+//                File CurrentWeekDir = new File("/root/homeWork/" + dateTool.getWeek());
                 //测试环境下用下面地址
-                File CurrentWeekDir = new File("/Users/Yionr/homeWork/" + weekNum);
+                File CurrentWeekDir = new File("/Users/Yionr/homeWork/" + dateTool.getWeek());
                 if (!CurrentWeekDir.exists())
                     CurrentWeekDir.mkdirs();
                 //创建作业
-                //FIXME 可能会出现前缀相同但是后缀不同的情况，但是这种情况即使提交了，也不会覆盖原文件，阻止用户二次提交相同文件的本意是防止被别的用户乱搞
                 File homeWork = new File(CurrentWeekDir, fileName);
-                //TODO 用户拥有纠错的机会，重新上传，遇到同名文件时，比较两个文件大小，提供文件修改日期并提醒用户是否替换
                 if (homeWork.exists())
                     throw new SysException("服务器上已经存在此作业!");
                 try {
