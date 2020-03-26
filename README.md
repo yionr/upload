@@ -21,3 +21,5 @@
 - 数据库设计： 两个字段 `varchar id primarykey` `varchar name`
 
 - 修改success.jsp 把地址改为当前项目的网址
+
+...
