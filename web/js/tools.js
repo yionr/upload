@@ -63,7 +63,8 @@ function openDeadLine() {
 
     let lastDays = 5 - date.getDay();
 
-    let lastHours = 12 - date.getHours();
+    //修正1小时
+    let lastHours = 11 - date.getHours();
 
     let lastMinuts = 60 - date.getMinutes();
 
