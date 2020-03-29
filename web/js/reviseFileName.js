@@ -4,6 +4,8 @@ function reviseFileName(targetName_pre,targetName_suf) {
     let id = targetName_pre.match(/^\d+/);
     let name = targetName_pre.match(/\D{2,3}$/);
 
+    let file = document.getElementById('file');
+
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST","revise");
     xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -47,6 +49,7 @@ function reviseFileName(targetName_pre,targetName_suf) {
             }
             //正常情况下这个应该永远也不会触发，非上传时间，uploadArea.display = none 不会看到上传框的，这样做是防止意外
             else if (xmlHttp.responseText === 'over'){
+                file.value = '';
                 alert("当前时间无法上传");
                 return;
             }
