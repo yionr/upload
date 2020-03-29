@@ -1,6 +1,7 @@
 package cloud.yionr.controller;
 
 import cloud.yionr.Exception.IdNotMatchException;
+import cloud.yionr.Exception.NotInTimeException;
 import cloud.yionr.Exception.StudentNotFoundException;
 import cloud.yionr.Exception.SysException;
 import cloud.yionr.common.DateTool;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -32,9 +34,24 @@ public class UploadController {
     private Logger logger = Logger.getLogger(UploadController.class);
 
     @RequestMapping("/uploadHomework")
-    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException {
+    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException {
 
-        logger.info("try to submit a file>>> ip: " + req.getRemoteAddr() + ">>>fileName: " + fileName);
+
+        logger.info("IP地址为: " + req.getRemoteAddr() + " 的用户即将开始上传文件，文件名是: " + fileName);
+
+        DayOfWeek weekDay = dateTool.getWeekDay();
+        int timeOfHour = dateTool.getHour();
+
+        if (weekDay == DayOfWeek.FRIDAY) {
+            if (timeOfHour >= 12) {
+                logger.info("当前不属于上传时间");
+                throw new NotInTimeException("当前不属于上传时间");
+            }
+        }
+        if (weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY || weekDay == DayOfWeek.MONDAY){
+            logger.info("当前不属于上传时间");
+            throw new NotInTimeException("当前不属于上传时间");
+        }
 //        到这儿，肯定是学号+姓名的形式了，学号存在2位和11位的情况 11位两个学号是确定的，2位可以是随意两位
         String fileName_suf = fileName.split("\\.")[0];
 //        根据fileName获取id
@@ -64,9 +81,9 @@ public class UploadController {
                     throw new SysException("服务器上已经存在此作业!");
                 try {
                     homeWork.createNewFile();
-                    logger.info("serverFileCreated!");
+                    logger.info("服务器文件创建成功!");
                     file.transferTo(homeWork);
-                    logger.info("serverFileTransferSuccess!");
+                    logger.info("服务器文件写入成功!");
                     return "success";
                 } catch (IOException e) {
                     e.printStackTrace();
