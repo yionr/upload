@@ -1,10 +1,8 @@
 package cloud.yionr.controller;
 
-import cloud.yionr.Exception.IdNotMatchException;
-import cloud.yionr.Exception.NotInTimeException;
-import cloud.yionr.Exception.StudentNotFoundException;
-import cloud.yionr.Exception.SysException;
+import cloud.yionr.Exception.*;
 import cloud.yionr.common.DateTool;
+import cloud.yionr.common.ServerFileTool;
 import cloud.yionr.entity.Student;
 import cloud.yionr.service.StudentService;
 import org.apache.log4j.Logger;
@@ -32,20 +30,13 @@ public class UploadController {
     @Autowired
     DateTool dateTool;
 
-    Properties properties;
-    {
-        properties = new Properties();
-        try {
-            properties.load(UploadController.class.getResourceAsStream("/common.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    @Autowired
+    ServerFileTool serverFileTool;
 
     private Logger logger = Logger.getLogger(UploadController.class);
 
     @RequestMapping("/uploadHomework")
-    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException {
+    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
 
 
         logger.info("IP地址为: " + req.getRemoteAddr() + " 的用户即将开始上传文件，文件名是: " + fileName);
@@ -87,17 +78,18 @@ public class UploadController {
             else if (id.length() == 2 && !student.getId().substring(9).equals(id)) {
                 throw new IdNotMatchException("姓名学号不匹配，请重试！");
             } else {
-                //创建当前周的文件夹
-//                File CurrentWeekDir = new File("/root/homeWork/" + dateTool.getWeek());
-                //测试环境下用下面地址
-                File CurrentWeekDir = new File(properties.getProperty("homeWorkRoot") , dateTool.getWeek()+"");
+                File CurrentWeekDir = new File(serverFileTool.properties.getProperty("homeWorkRoot") , dateTool.getWeek()+"");
                 if (!CurrentWeekDir.exists())
                     CurrentWeekDir.mkdirs();
                 //创建作业
                 File homeWork = new File(CurrentWeekDir, fileName);
 //                判断作业是否存在，将所有作业都提取出来，放到集合里面去，可以以全名的方式提取，也可以以前缀的方式提取
-                if (homeWork.exists())
-                    throw new SysException("服务器上已经存在此作业!");
+//                if (homeWork.exists())
+//                    throw new SysException("服务器上已经存在此作业!");
+//                通过文件前缀名，而不是之前的完整文件名来判断
+                if (serverFileTool.getFileListWithoutSuf().contains(fileName.split("\\.")[0]))
+                    throw new FileAlreadyExsitsException("服务器上已经存在此作业");
+
                 try {
                     homeWork.createNewFile();
                     logger.info("服务器文件创建成功!");
