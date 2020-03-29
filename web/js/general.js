@@ -3,7 +3,6 @@ function roll(e) {
     let offsetWidth = pad.offsetWidth;
     if (pad.className === 'tipPad'){
         let offsetRight = pad.style.right;
-        console.log(offsetRight);
         if (offsetRight != '-150px'){
             pad.style.right = - offsetWidth + "px";
             e.innerText = '展开';
@@ -15,7 +14,6 @@ function roll(e) {
     }
     else{
         let offsetLeft = pad.offsetLeft;
-        console.log(offsetLeft);
         if (offsetLeft === 0) {
             pad.style.left = -offsetWidth + "px";
             e.innerText = '展开';
