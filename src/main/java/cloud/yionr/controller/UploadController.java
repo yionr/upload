@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +31,16 @@ public class UploadController {
 
     @Autowired
     DateTool dateTool;
+
+    Properties properties;
+    {
+        properties = new Properties();
+        try {
+            properties.load(UploadController.class.getResourceAsStream("/common.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private Logger logger = Logger.getLogger(UploadController.class);
 
@@ -79,11 +90,12 @@ public class UploadController {
                 //创建当前周的文件夹
 //                File CurrentWeekDir = new File("/root/homeWork/" + dateTool.getWeek());
                 //测试环境下用下面地址
-                File CurrentWeekDir = new File("/Users/Yionr/homeWork/" + dateTool.getWeek());
+                File CurrentWeekDir = new File(properties.getProperty("homeWorkRoot") , dateTool.getWeek()+"");
                 if (!CurrentWeekDir.exists())
                     CurrentWeekDir.mkdirs();
                 //创建作业
                 File homeWork = new File(CurrentWeekDir, fileName);
+//                判断作业是否存在，将所有作业都提取出来，放到集合里面去，可以以全名的方式提取，也可以以前缀的方式提取
                 if (homeWork.exists())
                     throw new SysException("服务器上已经存在此作业!");
                 try {

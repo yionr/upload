@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Properties;
 
 @RestController
 public class ShowController {
@@ -16,13 +18,23 @@ public class ShowController {
     @Autowired
     DateTool dateTool;
 
+    Properties properties;
+    {
+        properties = new Properties();
+        try {
+            properties.load(UploadController.class.getResourceAsStream("/common.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping("/show")
     public String show(){
 
         //根据得到的周次去服务器里面查询指定文件夹，如果不存在（指定周还没有人上传，但是有人查询）则创建文件夹
 //        File file = new File("/root/homeWork/" + dateTool.getWeek());
 //        测试专用地址
-        File file = new File("/Users/Yionr/homeWork/" + dateTool.getWeek());
+        File file = new File(properties.getProperty("homeWorkRoot") , dateTool.getWeek()+"");
         if (!file.exists())
             file.mkdirs();
         //不断读文件夹里面的文件,每读一个提取文件名放入数组
