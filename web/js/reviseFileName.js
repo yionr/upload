@@ -48,6 +48,7 @@ function reviseFileName(targetName_pre,targetName_suf) {
             //正常情况下这个应该永远也不会触发，非上传时间，uploadArea.display = none 不会看到上传框的，这样做是防止意外
             else if (xmlHttp.responseText === 'over'){
                 alert("当前时间无法上传");
+                return;
             }
             else{
                 targetName_pre = xmlHttp.responseText;
