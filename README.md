@@ -12,10 +12,10 @@
 
 
 # 部署方法
-- 需要自己写两个文件`db.properties`和`log4j.properties`
+- 需要自己写文件`db.properties`
 
 - 数据库设计： 两个字段 `varchar id primarykey` `varchar name`
 
 - 修改success.jsp 把地址改为当前项目的网址
 
-- UploadController 有一处测试专用File地址，改为自己的地址；ShowController同UploadController
+- common.properties中将homeWorkRoot修改为作业保存的地址
