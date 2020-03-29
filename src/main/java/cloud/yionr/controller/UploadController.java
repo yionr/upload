@@ -57,6 +57,8 @@ public class UploadController {
                 logger.info("当前时间禁止提交作业");
                 throw new NotInTimeException("当前时间禁止提交作业");
             }
+
+
 //        到这儿，肯定是学号+姓名的形式了，学号存在2位和11位的情况 11位两个学号是确定的，2位可以是随意两位
         String fileName_suf = fileName.split("\\.")[0];
 //        根据fileName获取id
