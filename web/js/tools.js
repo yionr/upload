@@ -28,6 +28,9 @@ function isWorkingDay() {
     //    周日为0
     if (weekDay === 6 || weekDay === 0 || weekDay === 1)
         return false;
+    if (weekDay === 2)
+        if (date.getHours() < 8)
+            return false;
     return true;
 }
 

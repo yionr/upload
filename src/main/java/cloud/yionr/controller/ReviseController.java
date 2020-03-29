@@ -37,6 +37,11 @@ public class ReviseController {
             logger.info("名为:  " + oFName + " 的文件试图在禁止上传的时间点上传文件，已拦截");
             return "over";
         }
+        if (weekDay == DayOfWeek.TUESDAY)
+            if (timeOfHour < 8){
+                logger.info("名为:  " + oFName + " 的文件试图在禁止上传的时间点上传文件，已拦截");
+                return "over";
+            }
 
         logger.info("开始尝试文件名纠正,原文件名称为: " + oFName);
 
