@@ -12,7 +12,17 @@
 
 
 # 部署方法
-- 需要自己写文件`db.properties`
+- 在src/main/resources 下新建一个`db.properties`，内容为以下:
+
+```properties
+
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://{ip}/{database}?useUnicode=true&characterEncoding=utf8
+jdbc.username={username}
+jdbc.password={password}
+# 将带`{}`的内容换为自己的相应信息即可
+
+```
 
 - 数据库设计： 两个字段 `varchar id primarykey` `varchar name`
 
