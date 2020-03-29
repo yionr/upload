@@ -29,16 +29,16 @@ public class ReviseController {
 
         if (weekDay == DayOfWeek.FRIDAY) {
             if (timeOfHour >= 12) {
-                logger.info("this file submit request is not in time: " + oFName);
+                logger.info("名为:  " + oFName + " 的文件试图在禁止上传的时间点上传文件，已拦截");
                 return "over";
             }
         }
         if (weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY || weekDay == DayOfWeek.MONDAY){
-            logger.info("this file submit request is not in time: " + oFName);
+            logger.info("名为:  " + oFName + " 的文件试图在禁止上传的时间点上传文件，已拦截");
             return "over";
         }
 
-        logger.info("file start revise,originFileName is: " + oFName);
+        logger.info("开始尝试文件名纠正,原文件名称为: " + oFName);
 
         Student student = studentService.FindByName(name);
 //        如果根据姓名找到了这个学生的话，进一步判断正确学号
