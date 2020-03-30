@@ -10,7 +10,7 @@ window.onload = function () {
     }
 
     //补充标题
-    document.getElementById("week").innerText = getWeek(new Date(2020,2,4,8,0,0,0).getTime()) + "";
+    document.getElementById("week").innerText = getWeek(new Date(2020,2,4,0,0,0,0).getTime()) + "";
 
     //input file标签
     let file = document.getElementById("file");
