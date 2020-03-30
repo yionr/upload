@@ -12,7 +12,6 @@ public class ShowController {
 
     @RequestMapping("/show")
     public String show(){
-        System.out.println(serverFileTool.getFileListWithSuf().toString());
         return serverFileTool.getFileListWithSuf().toString();
     }
 }
