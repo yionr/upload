@@ -26,6 +26,6 @@ jdbc.password={password}
 
 - 数据库设计： 两个字段 `varchar id primarykey` `varchar name`
 
-- 修改success.jsp 把地址改为当前项目的网址
+- 修改success.jsp 和 error.jsp把地址改为当前项目的网址
 
 - common.properties中将homeWorkRoot修改为作业保存的地址
