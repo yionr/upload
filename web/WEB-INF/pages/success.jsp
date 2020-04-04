@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>上传成功</title>
     <style>
         *{
@@ -15,27 +16,40 @@
             user-select: none;
             overflow:hidden;
         }
-        div{
-            display: flex;
-            justify-content: center;
+
+        .pic{
+            display: inline-block;
+            position: relative;
+            left: calc(50% - 30vh);
+            height: 60%;
+            width: 60vh;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
         }
         p{
             text-align: center;
-            font-size: 6rem;
+            font-size: 10vh;
         }
-        a{
-            display: block;
-            text-align: center;
-            font-size: 3rem;
+        .return{
+            position: fixed;
+            bottom: 0;
+            font-size: 7vh;
+            left: calc(50% - 14vh);
         }
     </style>
 </head>
-<body ondragstart="return false">
-<div>
-    <img src="img/success.png" alt="" width="400px" height="400px">
+<body>
+<div class="pic">
+    <img src="img/success.png" alt="">
 </div>
 <p>上传成功</p>
-<%--<a href="https://upload.yionr.cloud">点此返回</a>--%>
-<a href="http://localhost:8080:upload_war">点此返回</a>
+<div class="return">
+<%--    <a href="https://upload.yionr.cloud">点此返回</a>--%>
+    <a href="http://localhost:8080/upload_war_exploded/">点此返回</a>
+</div>
 </body>
 </html>

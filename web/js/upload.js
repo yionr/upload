@@ -1,13 +1,16 @@
 window.onload = function () {
-    //不属于提交作业的时间，不展开上传框
+    //工作日展开上传框和截止时间
     if (isWorkingDay()){
         openUploadEntrance();
         openDeadLine();
     }
-    //TODO 其实这里还可以做一个 计时器，时间到了展开上传框的动画效果，但是其实没太大必要
+    //非工作日：打开倒计时 倒计时到了展开上传框   不过如果打开倒计时的话，位置呢？肯定会撞，另外如果不放倒计时，那么早上8点，应该也没人会看这个网页，那么做上传框好像没有太大用处，这个暂时不做，因为没有价值
+    else{
+
+    }
 
     //补充标题
-    document.getElementById("week").innerText = getWeek(new Date(2020,2,4,8,0,0,0).getTime()) + "";
+    document.getElementById("week").innerText = getWeek(new Date(2020,2,4,0,0,0,0).getTime()) + "";
 
     //input file标签
     let file = document.getElementById("file");
@@ -56,42 +59,4 @@ window.onload = function () {
         }
     };
 
-    //根据服务器存在的文件填充人员名单
-    (function getStatus() {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.open('GET','show');
-        xmlHttp.send(null);
-        xmlHttp.onreadystatechange = function(){
-            let showList;
-            if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
-                let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
-                showList = plist.split(", ");
-                for (let i = 0; i < showList.length; i++) {
-                    if (showList[i].length < 15) {
-                        let sn = parseInt(showList[i].substring(0, 2)) - 1;
-                        let td = document.getElementsByTagName("td")[sn];
-                        td.innerText = showList[i];
-                        td.className = "green";
-                    } else {
-                        if (showList[i].startsWith("20160802019")) {
-                            let td = document.getElementsByTagName("td")[30];
-                            td.innerText = showList[i];
-                            td.className = "green";
-                        }
-                        if (showList[i].startsWith("20160802004")) {
-                            let td = document.getElementsByTagName("td")[31];
-                            td.innerText = showList[i];
-                            td.className = "green";
-                        }
-                    }
-
-                }
-            }
-        }
-    })();
-
 };
-
-//TODO 上传添加动画
-//TODO 取消上传成功界面,文件拖到上传框触发动画,直接将文件上传,然后点亮(动画 就是 将上传框的文件移动到对应文件筐中去,然后点亮)
-// 做动画成本有点高。。以后太闲的时候再说吧！

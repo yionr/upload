@@ -1,10 +1,25 @@
 function reviseFileName(targetName_pre,targetName_suf) {
     //去除所有的空格
     targetName_pre = targetName_pre.replace(/ /g,"");
-    //FIXME 将开头开始的连续数字作为学号
-    let id = targetName_pre.match(/^\d+/);
-    //FIXME 将结尾之前的两到三个非数字字符作为姓名 目前暂时只有这一个匹配姓名的方法， 后续增加别的
-    let name = targetName_pre.match(/\D{2,3}$/);
+
+    let id,name;
+    //打算加一种简单的 姓名+学号,目前所有姓名+学号的判断策略，没有一个扩展，必须是姓名+学号 不能有其他东西，学号2位 11位无所谓
+    let regNumber = /\d/;
+    //如果开头不是数字，结尾是数字的话，则判断为姓名+学号
+    if(!regNumber.test(targetName_pre.substring(0,1)) && regNumber.test(targetName_pre.substring(targetName_pre.length - 1,targetName_pre.length))){
+
+        id = targetName_pre.match(/\d+$/) + "";
+        //相比\D+ , \D{2,3} 不存在任何优势
+        name = targetName_pre.match(/^\D+/);
+    }
+    //除此之外的所有情况一律以下处理
+    else{
+        id = targetName_pre.match(/^\d+/) + "";
+        //相比\D+ , \D{2,3} 不存在任何优势
+        name = targetName_pre.match(/\D+$/);
+    }
+
+    let file = document.getElementById('file');
 
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST","revise");
@@ -16,20 +31,24 @@ function reviseFileName(targetName_pre,targetName_suf) {
             if (xmlHttp.responseText === 'false'){
                 alert("无法识别文件归属，请根据提示输入学号，姓名：");
                 let fixId = "",fixName="";
-                while(!(/^\d{2}$/.test(fixId)) && !(/^20160805019$/.test(fixId)) && !(/^20160802004$/.test(fixId)))
+                while(!(/^\d{2}$/.test(fixId)) && !(/^20160802019$/.test(fixId)) && !(/^20160802004$/.test(fixId)))
                     fixId = prompt("请输入学号尾号（16级的请输入完整学号）:");
                 while(!(/^\D{2,3}$/.test(fixName)))
                     fixName = prompt("请输入姓名：");
                 targetName_pre = fixId + fixName;
 
             }
-            //当返回值是11位or2位，代表查找到来用户名，但是用户输入的id错了，给予提示
-            else if (xmlHttp.responseText.length === 11){
-                if (confirm(name + "的学号为：" + xmlHttp.responseText +"\n而您输入的学号为：" + id + "，是否纠正？")){
-                    if (xmlHttp.responseText.startsWith("2016"))
-                        targetName_pre = xmlHttp.responseText + name;
+            //当返回值以correctId开头，代表查找到了用户名，但是用户输入的id错了，给予提示
+            else if (xmlHttp.responseText.startsWith("correctId")){
+                console.log(xmlHttp.responseText);
+                if (confirm("用户: " + name + " 的学号为：" + xmlHttp.responseText.substring(10) +"\n而您输入的学号为: " + id + " ，是否纠正？")){
+                    if (xmlHttp.responseText.substring(10).startsWith("2016"))
+                        targetName_pre = xmlHttp.responseText.substring(10) + name;
                     else
-                        targetName_pre = xmlHttp.responseText.substring(9,11) + name;
+                        if (xmlHttp.responseText.substring(10).length === 11)
+                            targetName_pre = xmlHttp.responseText.substring(10).substring(9,11) + name;
+                        else
+                            targetName_pre = xmlHttp.responseText.substring(10) + name;
                 }
 
                 else{
@@ -38,18 +57,30 @@ function reviseFileName(targetName_pre,targetName_suf) {
                     return;
                 }
             }
-            else if (xmlHttp.responseText.length === 2){
-                if (confirm(name + "的班内学号为：" + xmlHttp.responseText +"\n而您输入的学号为：" + id + "，是否纠正？"))
-                    targetName_pre = xmlHttp.responseText + name;
+            //当返回值以correctName开头，代表查找到了用户名，但是用户输入的id错了，给予提示
+            else if (xmlHttp.responseText.startsWith("correctName")){
+                if (confirm("学号为: " + id + " 的用户的姓名为: " + xmlHttp.responseText.substring(12) +"\n而您输入的姓名为: " + name + "，是否纠正？")){
+                        //目前存在的一个bug是：当文件名形式为: 201708161xxXXX 且学号正确，姓名错误的时候 虽然会纠正姓名，但是无法同时纠正学号为2位
+                    //当用户姓名错了，且学号还是全学号的情况下
+                    //还有一种情况没有写，当16的写全学号，且名字错了的话，
+                    //当16写2位学号，名字错了的话直接返回false
+                    if (id.startsWith("2017"))
+                        targetName_pre = id.substring(9,11) + xmlHttp.responseText.substring(12);
+                    else if (id.length === 2 || id.startsWith("2016"))
+                        targetName_pre = id + xmlHttp.responseText.substring(12);
+                    }
                 else{
                     alert("本站不允许上传学号-姓名不对应的文件，请联系站长解决");
                     location.reload();
                     return;
                 }
             }
+
             //正常情况下这个应该永远也不会触发，非上传时间，uploadArea.display = none 不会看到上传框的，这样做是防止意外
             else if (xmlHttp.responseText === 'over'){
+                file.value = '';
                 alert("当前时间无法上传");
+                return;
             }
             else{
                 targetName_pre = xmlHttp.responseText;

@@ -25,8 +25,12 @@ function isWorkingDay() {
         if (date.getHours() >= 12)
             return false;
 
-    if (weekDay === 6 || weekDay === 7 || weekDay === 1)
+    //    周日为0
+    if (weekDay === 6 || weekDay === 0 || weekDay === 1)
         return false;
+    if (weekDay === 2)
+        if (date.getHours() < 8)
+            return false;
     return true;
 }
 
@@ -63,7 +67,8 @@ function openDeadLine() {
 
     let lastDays = 5 - date.getDay();
 
-    let lastHours = 12 - date.getHours();
+    //修正1小时
+    let lastHours = 11 - date.getHours();
 
     let lastMinuts = 60 - date.getMinutes();
 
@@ -82,8 +87,6 @@ function openDeadLine() {
     // lastDays = lastHours = lastMinuts = 0;
 
     //设置 fn 和 sn 的初始数值
-
-    //FIXME 不过如果我用if来做这个事情的话，到分界点他好像没法自动切换，后期改正吧
 
     //不能这么用interval，他不是从现在开始的，
     if (lastDays > 0){
