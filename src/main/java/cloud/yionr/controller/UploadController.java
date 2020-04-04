@@ -2,6 +2,7 @@ package cloud.yionr.controller;
 
 import cloud.yionr.Exception.*;
 import cloud.yionr.common.DateTool;
+import cloud.yionr.common.Log4jUtils;
 import cloud.yionr.common.ServerFileTool;
 import cloud.yionr.entity.Student;
 import cloud.yionr.service.StudentService;
@@ -33,30 +34,31 @@ public class UploadController {
     @Autowired
     ServerFileTool serverFileTool;
 
-    private Logger logger = Logger.getLogger(UploadController.class);
+    @Autowired
+    Log4jUtils log4jUtils;
 
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
 
 
-        logger.info("IP地址为: " + req.getRemoteAddr() + " 的用户即将开始上传文件，文件名是: " + fileName);
+        log4jUtils.getLogger().info("文件: " + fileName + " 开始上传至服务器:");
 
         DayOfWeek weekDay = dateTool.getWeekDay();
         int timeOfHour = dateTool.getHour();
 
         if (weekDay == DayOfWeek.FRIDAY) {
             if (timeOfHour >= 12) {
-                logger.info("当前时间禁止提交作业");
+                log4jUtils.getLogger().warn("当前时间禁止提交作业");
                 throw new NotInTimeException("当前时间禁止提交作业");
             }
         }
         if (weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY || weekDay == DayOfWeek.MONDAY){
-            logger.info("当前时间禁止提交作业");
+            log4jUtils.getLogger().info("当前时间禁止提交作业");
             throw new NotInTimeException("当前时间禁止提交作业");
         }
         if (weekDay == DayOfWeek.TUESDAY)
             if (timeOfHour < 8){
-                logger.info("当前时间禁止提交作业");
+                log4jUtils.getLogger().info("当前时间禁止提交作业");
                 throw new NotInTimeException("当前时间禁止提交作业");
             }
 
@@ -69,7 +71,6 @@ public class UploadController {
         String name = fileName_suf.split("^\\d+")[1];
 
         Student student = studentService.FindByName(name);
-        logger.info("fileName_suf: " + fileName_suf + " id: " + id + " name: " + name + "   searched: " + student);
         if (!(student == null)) {
 //            这里要分两种情况，学号2位和11位
 //            11位不要标出来，主要应对的是'19吴伟'这种情况
@@ -92,9 +93,9 @@ public class UploadController {
 
                 try {
                     homeWork.createNewFile();
-                    logger.info("服务器文件创建成功!");
+                    log4jUtils.getLogger().info("服务器文件创建成功!");
                     file.transferTo(homeWork);
-                    logger.info("服务器文件写入成功!");
+                    log4jUtils.getLogger().info("服务器文件写入成功!");
                     return "success";
                 } catch (IOException e) {
                     e.printStackTrace();
