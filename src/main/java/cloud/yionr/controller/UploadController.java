@@ -2,7 +2,6 @@ package cloud.yionr.controller;
 
 import cloud.yionr.Exception.*;
 import cloud.yionr.common.DateTool;
-import cloud.yionr.common.Log4jUtils;
 import cloud.yionr.common.ServerFileTool;
 import cloud.yionr.entity.Student;
 import cloud.yionr.service.StudentService;
@@ -17,11 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 public class UploadController {
@@ -34,31 +28,30 @@ public class UploadController {
     @Autowired
     ServerFileTool serverFileTool;
 
-    @Autowired
-    Log4jUtils log4jUtils;
+    private Logger logger = Logger.getLogger(ReviseController.class);
 
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
 
 
-        log4jUtils.getLogger().info("文件: " + fileName + " 开始上传至服务器:");
+        logger.info("文件: " + fileName + " 开始上传至服务器:");
 
         DayOfWeek weekDay = dateTool.getWeekDay();
         int timeOfHour = dateTool.getHour();
 
         if (weekDay == DayOfWeek.FRIDAY) {
             if (timeOfHour >= 12) {
-                log4jUtils.getLogger().warn("当前时间禁止提交作业");
+                logger.warn("当前时间禁止提交作业");
                 throw new NotInTimeException("当前时间禁止提交作业");
             }
         }
         if (weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY || weekDay == DayOfWeek.MONDAY){
-            log4jUtils.getLogger().info("当前时间禁止提交作业");
+            logger.info("当前时间禁止提交作业");
             throw new NotInTimeException("当前时间禁止提交作业");
         }
         if (weekDay == DayOfWeek.TUESDAY)
             if (timeOfHour < 8){
-                log4jUtils.getLogger().info("当前时间禁止提交作业");
+                logger.info("当前时间禁止提交作业");
                 throw new NotInTimeException("当前时间禁止提交作业");
             }
 
@@ -93,9 +86,9 @@ public class UploadController {
 
                 try {
                     homeWork.createNewFile();
-                    log4jUtils.getLogger().info("服务器文件创建成功!");
+                    logger.info("服务器文件创建成功!");
                     file.transferTo(homeWork);
-                    log4jUtils.getLogger().info("服务器文件写入成功!");
+                    logger.info("服务器文件写入成功!");
                     return "success";
                 } catch (IOException e) {
                     e.printStackTrace();
