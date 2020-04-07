@@ -28,7 +28,7 @@ public class UploadController {
     @Autowired
     ServerFileTool serverFileTool;
 
-    private Logger logger = Logger.getLogger(ReviseController.class);
+    private Logger logger = Logger.getLogger(UploadController.class);
 
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
