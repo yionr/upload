@@ -82,7 +82,7 @@ public class ReviseController {
 //                发现了之前为这个浏览器缓存的cookie数据
 //                    userInfo为`学号.姓名`格式
                     cookieUserInfo = URLDecoder.decode(cookie.getValue(),"utf-8");
-                    logger.info("发现cookie，userInfo: " + cookieUserInfo);
+                    logger.info("无法识别文件名，但是发现cookie，userInfo: " + cookieUserInfo);
                     return "cookie:" + cookieUserInfo;
                 }
             }
