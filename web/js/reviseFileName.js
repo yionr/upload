@@ -30,21 +30,19 @@ function reviseFileName(targetName_pre,targetName_suf) {
         if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
             if (xmlHttp.responseText === 'false'){
                 targetName_pre = userInput();
-                console.log(targetName_pre);
             }
             //当返回值以correctId开头，代表查找到了用户名，但是用户输入的id错了，给予提示
             else if (xmlHttp.responseText.startsWith("correctId")){
-                console.log(xmlHttp.responseText);
-                if (confirm("用户: " + name + " 的学号为：" + xmlHttp.responseText.substring(10) +"\n而您输入的学号为: " + id + " ，是否纠正？")){
-                    if (xmlHttp.responseText.substring(10).startsWith("2016"))
-                        targetName_pre = xmlHttp.responseText.substring(10) + name;
+                let userId = xmlHttp.responseText.split(':')[1];
+                if (confirm("用户: " + name + " 的学号为：" + userId +"\n而您输入的学号为: " + id + " ，是否纠正？")){
+                    if (userId.startsWith("2016"))
+                        targetName_pre = userId + name;
                     else
-                        if (xmlHttp.responseText.substring(10).length === 11)
-                            targetName_pre = xmlHttp.responseText.substring(10).substring(9,11) + name;
+                        if (userId.length === 11)
+                            targetName_pre = userId.substring(9,11) + name;
                         else
-                            targetName_pre = xmlHttp.responseText.substring(10) + name;
+                            targetName_pre = userId + name;
                 }
-
                 else{
                     alert("本站不允许上传学号-姓名不对应的文件，请联系站长解决");
                     location.reload();
@@ -53,15 +51,12 @@ function reviseFileName(targetName_pre,targetName_suf) {
             }
             //当返回值以correctName开头，代表查找到了用户名，但是用户输入的id错了，给予提示
             else if (xmlHttp.responseText.startsWith("correctName")){
-                if (confirm("学号为: " + id + " 的用户的姓名为: " + xmlHttp.responseText.substring(12) +"\n而您输入的姓名为: " + name + "，是否纠正？")){
-                        //目前存在的一个bug是：当文件名形式为: 201708161xxXXX 且学号正确，姓名错误的时候 虽然会纠正姓名，但是无法同时纠正学号为2位
-                    //当用户姓名错了，且学号还是全学号的情况下
-                    //还有一种情况没有写，当16的写全学号，且名字错了的话，
-                    //当16写2位学号，名字错了的话直接返回false
+                let userName = xmlHttp.responseText.split(':')[1];
+                if (confirm("学号为: " + id + " 的用户的姓名为: " + userName +"\n而您输入的姓名为: " + name + "，是否纠正？")){
                     if (id.startsWith("2017"))
-                        targetName_pre = id.substring(9,11) + xmlHttp.responseText.substring(12);
+                        targetName_pre = id.substring(9,11) + userName;
                     else if (id.length === 2 || id.startsWith("2016"))
-                        targetName_pre = id + xmlHttp.responseText.substring(12);
+                        targetName_pre = id + userName;
                     }
                 else{
                     alert("本站不允许上传学号-姓名不对应的文件，请联系站长解决");
@@ -99,6 +94,10 @@ function reviseFileName(targetName_pre,targetName_suf) {
     }
 }
 
+/**
+ * 此方法封装用户手动输入学号和姓名（初步合法）步骤
+ * @returns {string} 返回用户输入的学号+姓名
+ */
 function userInput(){
     alert("无法识别文件归属，请根据提示输入学号，姓名：");
     let fixId = "",fixName="";
