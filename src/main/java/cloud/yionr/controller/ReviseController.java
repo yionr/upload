@@ -57,6 +57,7 @@ public class ReviseController {
                     logger.warn(name + "学号填写错误，提示纠正");
                     return "correctId:" + student.getId();
                 }
+//            FIXME 文件名是：19吴伟 这种情况 会直接放行，不提示学号错误，但实际上这个属于例外情况，应该提示学号错误的，不过问题不严重
             if (id.length() == 2)
                 if (!student.getId().substring(9,11).equals(id)){
                     logger.warn(name + "学号填写错误，提示纠正");
