@@ -44,7 +44,7 @@ function reviseFileName(targetName_pre,targetName_suf) {
                             targetName_pre = userId + name;
                 }
                 else{
-                    alert("本站不允许上传学号-姓名不对应的文件，请联系站长解决");
+                    alert("本站不允许上传学号-姓名不对应的文件");
                     location.reload();
                     return;
                 }
@@ -59,7 +59,7 @@ function reviseFileName(targetName_pre,targetName_suf) {
                         targetName_pre = id + userName;
                     }
                 else{
-                    alert("本站不允许上传学号-姓名不对应的文件，请联系站长解决");
+                    alert("本站不允许上传学号-姓名不对应的文件");
                     location.reload();
                     return;
                 }
