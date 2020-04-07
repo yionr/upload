@@ -54,12 +54,12 @@ public class ReviseController {
             //如果学生输入的学号和正确的学号不一致，则返回正确学号，提醒用户
             if (id.length() == 11)
                 if (!student.getId().equals(id)){
-                    logger.warn(name + "学号填写错误，提供纠正");
+                    logger.warn(name + "学号填写错误，提示纠正");
                     return "correctId:" + student.getId();
                 }
             if (id.length() == 2)
                 if (!student.getId().substring(9,11).equals(id)){
-                    logger.warn(name + "学号填写错误，提供纠正");
+                    logger.warn(name + "学号填写错误，提示纠正");
                     return "correctId:" + student.getId().substring(9,11);
                 }
         }
@@ -92,7 +92,7 @@ public class ReviseController {
         else{
 //        到这里，表示根据学号找到了学生,但是name错了
             if (!student.getName().equals(name)){
-                logger.warn(id + "姓名填写错误，提供纠正");
+                logger.warn(id + "姓名填写错误，提示纠正");
                 return "correctName:" + student.getName();
             }
         }
