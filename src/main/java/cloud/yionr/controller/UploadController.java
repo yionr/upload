@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.time.DayOfWeek;
 
 @Controller
@@ -31,7 +34,7 @@ public class UploadController {
     private Logger logger = Logger.getLogger(UploadController.class);
 
     @RequestMapping("/uploadHomework")
-    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
+    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
 
 
         logger.info("文件: " + fileName + " 开始上传至服务器:");
@@ -89,6 +92,11 @@ public class UploadController {
                     logger.info("服务器文件创建成功!");
                     file.transferTo(homeWork);
                     logger.info("服务器文件写入成功!");
+//                    在这里创建Cookie,需要考虑一个问题，每次文件写入成功都要刷新cookie吗？
+                    Cookie cookie = new Cookie("userInfo",id + "." + URLEncoder.encode(name,"utf-8"));
+//                    设置cookie存活时间为一学期（半年）
+                    cookie.setMaxAge(15768000);
+                    response.addCookie(cookie);
                     return "success";
                 } catch (IOException e) {
                     e.printStackTrace();

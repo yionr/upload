@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.time.DayOfWeek;
 
 @RestController
@@ -22,7 +25,7 @@ public class ReviseController {
     private Logger logger = Logger.getLogger(ReviseController.class);
 
     @RequestMapping("revise")
-    public String revise(String id, String name, String oFName, HttpServletRequest request){
+    public String revise(String id, String name, String oFName, HttpServletRequest request) throws UnsupportedEncodingException {
 
         DayOfWeek weekDay = dateTool.getWeekDay();
         int timeOfHour = dateTool.getHour();
@@ -69,6 +72,20 @@ public class ReviseController {
         }
 //        如果到这还没有找到的话，就说明，这个文件名，不是以学号开头，也不是以姓名结尾的，暂时无法处理
         if (student == null){
+//            如果用户提交的文件是无规律的话，查询是否有cookie，用cookie来处理
+            String cookieUserInfo;
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie :
+                    cookies) {
+                if (cookie.getName().equals("userInfo")){
+//                发现了之前为这个浏览器缓存的cookie数据
+//                    userInfo为`学号.姓名`格式
+                    cookieUserInfo = URLDecoder.decode(cookie.getValue(),"utf-8");
+                    logger.info("发现cookie，userInfo: " + cookieUserInfo);
+                    return "cookie:" + cookieUserInfo;
+                }
+            }
+//            如果没有发现cookie，则让用户手动填写表单
             logger.warn("无法识别！请求用户手动填写表单");
             return "false";
         }

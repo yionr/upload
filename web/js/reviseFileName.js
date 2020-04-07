@@ -29,14 +29,8 @@ function reviseFileName(targetName_pre,targetName_suf) {
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
             if (xmlHttp.responseText === 'false'){
-                alert("无法识别文件归属，请根据提示输入学号，姓名：");
-                let fixId = "",fixName="";
-                while(!(/^\d{2}$/.test(fixId)) && !(/^20160802019$/.test(fixId)) && !(/^20160802004$/.test(fixId)))
-                    fixId = prompt("请输入学号尾号（16级的请输入完整学号）:");
-                while(!(/^\D{2,3}$/.test(fixName)))
-                    fixName = prompt("请输入姓名：");
-                targetName_pre = fixId + fixName;
-
+                targetName_pre = userInput();
+                console.log(targetName_pre);
             }
             //当返回值以correctId开头，代表查找到了用户名，但是用户输入的id错了，给予提示
             else if (xmlHttp.responseText.startsWith("correctId")){
@@ -75,7 +69,18 @@ function reviseFileName(targetName_pre,targetName_suf) {
                     return;
                 }
             }
-
+            else if (xmlHttp.responseText.startsWith('cookie')){
+                let userInfo = xmlHttp.responseText.split(':')[1];
+                let userId = userInfo.split('.')[0];
+                let username = userInfo.split('.')[1];
+                if (confirm("无法识别文件名，请问你是: " + username + " 吗？")){
+                    targetName_pre = userId + username;
+                }
+                else{
+                //    用户不承认上次成功提交的数据为本人，这时让他自己填写
+                    targetName_pre = userInput();
+                }
+            }
             //正常情况下这个应该永远也不会触发，非上传时间，uploadArea.display = none 不会看到上传框的，这样做是防止意外
             else if (xmlHttp.responseText === 'over'){
                 file.value = '';
@@ -92,4 +97,14 @@ function reviseFileName(targetName_pre,targetName_suf) {
             form.submit();
         }
     }
+}
+
+function userInput(){
+    alert("无法识别文件归属，请根据提示输入学号，姓名：");
+    let fixId = "",fixName="";
+    while(!(/^\d{2}$/.test(fixId)) && !(/^20160802019$/.test(fixId)) && !(/^20160802004$/.test(fixId)))
+        fixId = prompt("请输入学号尾号（16级的请输入完整学号）:");
+    while(!(/^\D{2,3}$/.test(fixName)))
+        fixName = prompt("请输入姓名：");
+    return fixId +fixName;
 }
