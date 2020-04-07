@@ -69,8 +69,8 @@ function openDeadLine() {
 
     //修正1小时
     let lastHours = 11 - date.getHours();
-
-    let lastMinuts = 60 - date.getMinutes();
+    //尝试修正1分钟
+    let lastMinuts = 59 - date.getMinutes();
 
     let lastSeconds = 60 - date.getSeconds();
 

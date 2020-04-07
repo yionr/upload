@@ -16,11 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 public class UploadController {
@@ -39,14 +34,14 @@ public class UploadController {
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest req, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
 
 
-        logger.info("IP地址为: " + req.getRemoteAddr() + " 的用户即将开始上传文件，文件名是: " + fileName);
+        logger.info("文件: " + fileName + " 开始上传至服务器:");
 
         DayOfWeek weekDay = dateTool.getWeekDay();
         int timeOfHour = dateTool.getHour();
 
         if (weekDay == DayOfWeek.FRIDAY) {
             if (timeOfHour >= 12) {
-                logger.info("当前时间禁止提交作业");
+                logger.warn("当前时间禁止提交作业");
                 throw new NotInTimeException("当前时间禁止提交作业");
             }
         }
@@ -69,7 +64,6 @@ public class UploadController {
         String name = fileName_suf.split("^\\d+")[1];
 
         Student student = studentService.FindByName(name);
-        logger.info("fileName_suf: " + fileName_suf + " id: " + id + " name: " + name + "   searched: " + student);
         if (!(student == null)) {
 //            这里要分两种情况，学号2位和11位
 //            11位不要标出来，主要应对的是'19吴伟'这种情况
