@@ -19,4 +19,10 @@ public class ShowController {
         log4jUtils.addVisitCount();
         return serverFileTool.getFileListWithSuf().toString();
     }
+
+    @RequestMapping("/showVisitCount")
+    public String showVisitCount(){
+
+        return null;
+    }
 }
