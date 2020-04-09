@@ -95,7 +95,9 @@
     //根据服务器存在的文件填充人员名单
     (function getStatus() {
         let xmlHttp = new XMLHttpRequest();
-        xmlHttp.open('GET','show');
+        //看看把请求改为POST能不能解决Tomcat那个报错
+        xmlHttp.open('POST','show');
+        xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
         xmlHttp.send(null);
         xmlHttp.onreadystatechange = function(){
             let showList;
