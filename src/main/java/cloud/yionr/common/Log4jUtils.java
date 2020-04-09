@@ -38,14 +38,12 @@ public class Log4jUtils {
             e.printStackTrace();
         }
     }
-    public void getVisitCount(){
-        int count;
+    public int getVisitCount(){
         try {
-            count = Integer.parseInt(IOUtils.toString(new FileReader(logFile)));
-            IOUtils.write(++count+"",new FileOutputStream(logFile));
-
+            return Integer.parseInt(IOUtils.toString(new FileReader(logFile)));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return 0;
     }
 }

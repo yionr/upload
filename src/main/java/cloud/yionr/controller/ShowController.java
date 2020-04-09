@@ -21,8 +21,7 @@ public class ShowController {
     }
 
     @RequestMapping("/showVisitCount")
-    public String showVisitCount(){
-
-        return null;
+    public int showVisitCount(){
+        return log4jUtils.getVisitCount();
     }
 }

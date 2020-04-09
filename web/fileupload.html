@@ -14,6 +14,10 @@
 <br>
 <h1 class="noSelect">软件工程第<span id="week"></span>周课后作业</h1>
 
+<div class="visitedCount">
+    网页浏览量: <span>0</span>
+</div>
+
 <a href="https://github.com/Yionr/upload"><div class="github noSelect">
     <img src="img/github.png" alt="" width="32px" height="32px"><span>GitHub</span>
 </div></a>
@@ -22,15 +26,15 @@
 <div id="fn"></div> <div id="fu"></div> <div id="kd">:</div> <div id="sn"></div> <div id="su"></div>
 </div>
 
-<div class="tipPad">
-    <section class="tips"><input type="checkbox">这是第一个tip！</section>
-    <div class="after" onclick="roll(this)">收起</div>
-</div>
+<!--<div class="tipPad">-->
+<!--    <section class="tips"><input type="checkbox">这是第一个tip！</section>-->
+<!--    <div class="after" onclick="roll(this)">收起</div>-->
+<!--</div>-->
 
-<div class="announcementPad">
-    <section class="announcements"><input type="checkbox">这是第一个公告！</section>
-    <div class="after" onclick="roll(this)">收起</div>
-</div>
+<!--<div class="announcementPad">-->
+<!--    <section class="announcements"><input type="checkbox">这是第一个公告！</section>-->
+<!--    <div class="after" onclick="roll(this)">收起</div>-->
+<!--</div>-->
 
 <div class="uploadArea">
     <form class="upload" action="uploadHomework" method="post" enctype="multipart/form-data">
@@ -127,6 +131,14 @@
             }
         }
     })();
+</script>
+
+<script>
+    getAjaxConnection('POST','showVisitCount',function (xmlHttp) {
+        let countDiv = document.getElementsByClassName('visitedCount')[0];
+        let countNode = countDiv.getElementsByTagName('span')[0];
+        countNode.innerText = xmlHttp.responseText;
+    })
 </script>
 
 <footer>

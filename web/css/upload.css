@@ -22,6 +22,12 @@ a{
     text-decoration: none;
 }
 
+.visitedCount{
+    position:absolute;
+    left: 0;
+    top: 0;
+}
+
 .github{
     position: absolute;
     right: 10px;
