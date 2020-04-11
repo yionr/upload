@@ -27,26 +27,13 @@ public class ReviseController {
     @RequestMapping("revise")
     public String revise(String id, String name, String oFName, HttpServletRequest request) throws UnsupportedEncodingException {
 
-        DayOfWeek weekDay = dateTool.getWeekDay();
-        int timeOfHour = dateTool.getHour();
-
-        if (weekDay == DayOfWeek.FRIDAY) {
-            if (timeOfHour >= 12) {
+        if (!dateTool.isWorkingDay()) {
                 logger.warn("用户ip: " + request.getRemoteAddr() + " 文件名:  " + oFName + "  试图在禁止上传的时间点上传文件，已拦截");
                 return "over";
-            }
         }
-        if (weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY || weekDay == DayOfWeek.MONDAY){
-            logger.warn("用户ip: " + request.getRemoteAddr() + " 文件名:  " + oFName + "  试图在禁止上传的时间点上传文件，已拦截");
-            return "over";
-        }
-        if (weekDay == DayOfWeek.TUESDAY)
-            if (timeOfHour < 8){
-                logger.warn("用户ip: " + request.getRemoteAddr() + " 文件名:  " + oFName + "  试图在禁止上传的时间点上传文件，已拦截");
-                return "over";
-            }
 
         logger.info("用户ip: " + request.getRemoteAddr() + " 提交文件,完整文件名称为: " + oFName + " 开始检测！");
+        logger.info("此控制器提取的id为: " + id + " ,name为: " + name);
 
         Student student = studentService.FindByName(name);
 //        如果根据姓名找到了这个学生的话，进一步判断正确学号
@@ -63,6 +50,8 @@ public class ReviseController {
                     logger.warn(name + "学号填写错误，提示纠正");
                     return "correctId:" + student.getId().substring(9,11);
                 }
+            if (id.equals("null"))
+                logger.warn("无法识别此命名格式下的id，但是已经根据姓名找到了id(这条日志会伴随下面的'格式完全正确'一同打印出)");
         }
 //        如果姓名无法识别，则根据学号来查找
         else{
