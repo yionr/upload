@@ -83,6 +83,7 @@ function reviseFileName(targetName_pre,targetName_suf) {
                 return;
             }
             else{
+                //FIXME 提交无缘无故报错，应该是这里出了问题
                 targetName_pre = xmlHttp.responseText;
             }
             //将文件上传到服务器时需要读取
