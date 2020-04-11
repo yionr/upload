@@ -36,27 +36,13 @@ public class UploadController {
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
 
-
+//空指针报错是因为跳过reviseController了？
         logger.info("文件: " + fileName + " 开始上传至服务器:");
 
-        DayOfWeek weekDay = dateTool.getWeekDay();
-        int timeOfHour = dateTool.getHour();
-
-        if (weekDay == DayOfWeek.FRIDAY) {
-            if (timeOfHour >= 12) {
-                logger.warn("当前时间禁止提交作业");
-                throw new NotInTimeException("当前时间禁止提交作业");
-            }
-        }
-        if (weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY || weekDay == DayOfWeek.MONDAY){
-            logger.info("当前时间禁止提交作业");
+        if (!dateTool.isWorkingDay()) {
+            logger.warn("当前时间禁止提交作业");
             throw new NotInTimeException("当前时间禁止提交作业");
         }
-        if (weekDay == DayOfWeek.TUESDAY)
-            if (timeOfHour < 8){
-                logger.info("当前时间禁止提交作业");
-                throw new NotInTimeException("当前时间禁止提交作业");
-            }
 
 
 //        到这儿，肯定是学号+姓名的形式了，学号存在2位和11位的情况 11位两个学号是确定的，2位可以是随意两位
@@ -84,8 +70,10 @@ public class UploadController {
 //                if (homeWork.exists())
 //                    throw new SysException("服务器上已经存在此作业!");
 //                通过文件前缀名，而不是之前的完整文件名来判断
-                if (serverFileTool.getFileListWithoutSuf().contains(fileName.split("\\.")[0]))
+                if (serverFileTool.getFileListWithoutSuf().contains(fileName.split("\\.")[0])){
+                    logger.warn("服务器上已经存在此作业");
                     throw new FileAlreadyExsitsException("服务器上已经存在此作业");
+                }
 
                 try {
                     homeWork.createNewFile();
