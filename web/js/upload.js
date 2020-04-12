@@ -1,13 +1,21 @@
 window.onload = function () {
     //工作日展开上传框和截止时间
-    if (!isWorkingDay()){
+    if (isWorkingDay()){
         openUploadEntrance();
         openDeadLine();
+
+        setInterval(function () {
+            let announcementPad = document.getElementsByClassName('announcementPad')[0];
+            let anInfo = announcementPad.getElementsByClassName('after')[0];
+            anInfo.innerText = '收起';
+            announcementPad.style.right = '0';
+        },1000);
     }
     //非工作日：打开倒计时 倒计时到了展开上传框   不过如果打开倒计时的话，位置呢？肯定会撞，另外如果不放倒计时，那么早上8点，应该也没人会看这个网页，那么做上传框好像没有太大用处，这个暂时不做，因为没有价值
     else{
 
     }
+
 
     //补充标题
     document.getElementById("week").innerText = getWeek(new Date(2020,2,4,0,0,0,0).getTime()) + "";
@@ -37,6 +45,17 @@ window.onload = function () {
             fileInfo.innerText = "点击或直接拖拽文件至此";
             return;
         }
+
+        //做动画在这里做
+        let animation = document.getElementById('animation');
+        let deg = 0;
+        fileInfo.remove();
+        animation.style.display = 'inline-block';
+        setInterval(function () {
+            //控制旋转的速度
+            deg += 2;
+            animation.style.transform = 'rotate(' + deg +'deg)';
+        },1000/60);
 
         //只要不是文件夹or无后缀文件，都将文件名上传到服务器进行一次检测，防止学号姓名打错了的情况。
         reviseFileName(targetName_pre,targetName_suf);
