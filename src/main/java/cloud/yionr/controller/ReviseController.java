@@ -39,9 +39,9 @@ public class ReviseController {
 //        } catch (Exception e) {
 //            throw new IdNotMatchException("know exception!");
 //        }
-        Student student = null;
+        Student student;
         try {
-            student = studentService.FindByName(name);
+            student = studentService.FindByName(name);  //这里，如果name是null的话，是不会报错的
         } catch (Exception e) {
             logger.warn("查询数据库过程中出现异常!");
             throw new SqlQueryException("查询数据库过程中出现异常!");
