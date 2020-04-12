@@ -15,7 +15,7 @@
 <h1 class="noSelect">软件工程第<span id="week"></span>周课后作业</h1>
 
 <div class="visitedCount noSelect">
-    网页浏览量: <span>0</span>
+    总访问次数: <span>0</span>
 </div>
 
 <a href="https://github.com/Yionr/upload"><div class="github noSelect">
@@ -25,28 +25,26 @@
 <div class="deadline">
 <div id="fn"></div> <div id="fu"></div> <div id="kd">:</div> <div id="sn"></div> <div id="su"></div>
 </div>
-
-<!--<div class="tipPad">-->
-<!--    <section class="tips"><input type="checkbox">这是第一个tip！</section>-->
-<!--    <div class="after" onclick="roll(this)">收起</div>-->
-<!--</div>-->
-
-<!--<div class="announcementPad">-->
-<!--    <section class="announcements"><input type="checkbox">这是第一个公告！</section>-->
-<!--    <div class="after" onclick="roll(this)">收起</div>-->
-<!--</div>-->
+<div class="announcementPad" style="right: -150px;">
+    <p>更新内容</p>
+    <div class="items">
+        <section class="item" >1. (Beta)现在，一周内再次提交作业会<strong>覆盖</strong>之前的提交</section>
+    </div>
+    <div class="after" onclick="roll(this)">展开</div>
+</div>
 
 <div class="uploadArea">
     <form class="upload" action="uploadHomework" method="post" enctype="multipart/form-data">
             <div class="file">
                 <input id="file" name="file" type="file" />
                 <input id="fileName" name="fileName" type="text" value="" hidden />
-                <span id="fileInfo" class="noSelect">点击或直接拖拽文件至此</span>
+                <div class="info">
+                    <img src="img/circle.png" alt="" id="animation" style="display: none">
+                    <span id="fileInfo">点击或直接拖拽文件至此</span>
+                </div>
             </div>
     </form>
 </div>
-
-
 
 <div class="serverArea">
     <h3 class="noSelect">如果下方对应位置被点亮,说明服务器已经存在此文件:</h3>
