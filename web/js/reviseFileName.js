@@ -28,6 +28,12 @@ function reviseFileName(targetName_pre,targetName_suf) {
     xmlHttp.send("id=" + id + "&name=" + name + "&oFName=" + targetName_pre + targetName_suf);
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
+            if (xmlHttp.responseText.startsWith('\n<html')){
+                let errorMessage = xmlHttp.responseText.substr(xmlHttp.responseText.indexOf('Exception:') + 10,xmlHttp.responseText.indexOf('!',xmlHttp.responseText.indexOf('Exception:')) - xmlHttp.responseText.indexOf('Exception:') - 9);
+                alert('检查文件名的时候发生异常，信息为:\n' + errorMessage + '\n' + '请重试一次,如果再次出现这个问题,请反馈给我');
+                location.reload();
+                return;
+            }
             if (xmlHttp.responseText === 'false'){
                 targetName_pre = userInput();
             }
