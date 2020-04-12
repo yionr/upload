@@ -34,7 +34,7 @@ public class UploadController {
     private Logger logger = Logger.getLogger(UploadController.class);
 
     @RequestMapping("/uploadHomework")
-    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException {
+    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException, PermissionDeniedException, SqlQueryException {
 
 //空指针报错是因为跳过reviseController了？
         logger.info("文件: " + fileName + " 开始上传至服务器:");
@@ -72,7 +72,33 @@ public class UploadController {
 //                通过文件前缀名，而不是之前的完整文件名来判断
                 if (serverFileTool.getFileListWithoutSuf().contains(fileName.split("\\.")[0])){
                     logger.warn("服务器上已经存在此作业");
-                    throw new FileAlreadyExsitsException("服务器上已经存在此作业");
+//                    判断ip
+                    String lastIP = null;
+                    if (id.length() == 2)
+                        lastIP= studentService.FindByLastId("2017%" + id).getLastIP();
+                    else if(id.length() == 11)
+                        lastIP = studentService.FindById(id).getLastIP();
+                    logger.info("ip is: " + lastIP);
+//                    这个在本地无法测试，因为本地是带端口的，但是作为beta功能，可以直接发布
+                    if (request.getRemoteAddr().equals(lastIP)){
+                        logger.info("此次提交ip与该用户上次提交ip相同，判定为用户自己提交的，即将覆盖原文件:");
+                        try {
+                            homeWork.delete();
+                            homeWork.createNewFile();
+                            file.transferTo(homeWork);
+                            return "success";
+                        }
+                        catch (Exception e){
+                            throw new SysException("在服务器上更新文件时遇到未知错误，更新失败!");
+                        }
+                    }
+                    else if (lastIP == null){
+                        throw new SqlQueryException("查询上次提交IP失败，故无法确定权限，请重试!");
+                    }
+                    else{
+                        logger.warn("更新文件时的ip和提交时的ip不同，没有权限更新文件!");
+                        throw new PermissionDeniedException("您的IP地址与提交文件时的IP地址不符，没有权限更新文件!");
+                    }
                 }
 
                 try {
@@ -100,7 +126,6 @@ public class UploadController {
                     logger.info("cookie附加成功");
                     return "success";
                 } catch (IOException e) {
-                    e.printStackTrace();
                     throw new SysException("在服务器上创建文件时遇到未知错误，上传失败!");
                 }
             }
