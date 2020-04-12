@@ -19,4 +19,7 @@ public class StudentService {
     public Student FindByLastId(String lastId){
         return dao.findByLastId(lastId);
     }
+    public boolean updateIP(Student student){
+        return dao.updateIP(student);
+    }
 }

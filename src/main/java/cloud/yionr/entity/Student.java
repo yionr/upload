@@ -4,12 +4,25 @@ package cloud.yionr.entity;
 public class Student {
     private String name;
     private String id;
+    private String lastIP;
+
+    public Student() {
+    }
+
+    public String getLastIP() {
+        return lastIP;
+    }
+
+    public void setLastIP(String lastIP) {
+        this.lastIP = lastIP;
+    }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Student{" +
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
+                ", lastIP='" + lastIP + '\'' +
                 '}';
     }
 
