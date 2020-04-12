@@ -42,8 +42,8 @@ public class Log4jUtils {
         try {
             return Integer.parseInt(IOUtils.toString(new FileReader(logFile)));
         } catch (IOException e) {
-            e.printStackTrace();
+//            目前知道，存在一定几率（基本上都是部署刚完成的时候）访问logFile，存在读取内容为空字符串""的情况
+            return 0;
         }
-        return 0;
     }
 }
