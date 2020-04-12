@@ -13,6 +13,6 @@ public interface StudentDao {
     Student findById(String id);
     @Select("select * from student where id like #{lastId}")
     Student findByLastId(String lastId);
-    @Update("update table student set lastIP=#{lastIP} where id=#{id}")
+    @Update("update student set lastIP=#{lastIP} where id=#{id}")
     boolean updateIP(Student student);
 }
