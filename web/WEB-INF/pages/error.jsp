@@ -14,6 +14,6 @@ ${msg}
     ps.如果要重新提交作业，请暂时先QQ发给我，将在后续更新完善
 </p>
 <%--<a href="https://upload.yionr.cloud">返回</a>--%>
-<a href="http://localhost:8080/upload_war_exploded/">返回</a>
+<a href="http://localhost:8080/upload/">返回</a>
 </body>
 </html>
