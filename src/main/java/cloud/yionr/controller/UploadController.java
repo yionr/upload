@@ -80,11 +80,24 @@ public class UploadController {
                     logger.info("服务器文件创建成功!");
                     file.transferTo(homeWork);
                     logger.info("服务器文件写入成功!");
-//                    在这里创建Cookie,需要考虑一个问题，每次文件写入成功都要刷新cookie吗？
+
+//                    将ip记录到数据库
+                    Student student1 = new Student();
+                    student1.setId(id);
+                    student.setLastIP(request.getRemoteAddr());
+                    try {
+                        studentService.updateIP(student1);
+                        logger.info("更新id: " + id + "的IP成功！");
+                    } catch (Exception e) {
+                        logger.warn("更新IP失败。");
+                    }
+
+//                    附加cookie
                     Cookie cookie = new Cookie("userInfo",id + "." + URLEncoder.encode(name,"utf-8"));
 //                    设置cookie存活时间为一学期（半年）
                     cookie.setMaxAge(15768000);
                     response.addCookie(cookie);
+                    logger.info("cookie附加成功");
                     return "success";
                 } catch (IOException e) {
                     e.printStackTrace();
