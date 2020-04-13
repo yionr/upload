@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <title>交作业的地方!</title>
@@ -10,143 +12,153 @@
     <script src="js/tools.js"></script>
     <script src="js/general.js"></script>
 </head>
+
 <body>
-<br>
-<h1 class="noSelect">软件工程第<span id="week"></span>周课后作业</h1>
-
-<div class="visitedCount noSelect">
-    总访问次数: <span>0</span>
-</div>
-
-<a href="https://github.com/Yionr/upload"><div class="github noSelect">
-    <img src="img/github.png" alt="" width="32px" height="32px"><span>GitHub</span>
-</div></a>
-
-<div class="deadline">
-<div id="fn"></div> <div id="fu"></div> <div id="kd">:</div> <div id="sn"></div> <div id="su"></div>
-</div>
-<div class="announcementPad" style="right: -150px;display: none;">
-    <p>更新内容</p>
-    <div class="items">
-        <section class="item" >· 每次更新都伴随着未知的新BUG，请谅解</section>
-        <br>
-        <section class="item" >1. (Beta)现在，一周内再次提交作业会<strong>覆盖</strong>之前的提交</section>
-        <br>
-        <section class="item" >2. 网页使用Cookie记录用户最后一次提交信息,一定程度上提高上传效率</section>
-    </div>
-    <div class="after" onclick="roll(this)">展开</div>
-</div>
-
-<div class="uploadArea">
-    <form class="upload" action="uploadHomework" method="post" enctype="multipart/form-data">
-            <div class="file">
-                <input id="file" name="file" type="file" />
-                <input id="fileName" name="fileName" type="text" value="" hidden />
-                <div class="info">
-                    <img src="img/circle.png" alt="" id="animation" style="display: none">
-                    <span id="fileInfo">点击或直接拖拽文件至此</span>
-                </div>
-            </div>
-    </form>
-</div>
-
-<div class="serverArea">
-    <h3 class="noSelect">如果下方对应位置被点亮,说明服务器已经存在此文件:</h3>
     <br>
-    <table class="noSelect">
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td class="gray">空缺</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-        </tr>
-        <tr>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>15</td>
-            <td>16</td>
-            <td>17</td>
-            <td>18</td>
-            <td>19</td>
-            <td>20</td>
-        </tr>
-        <tr>
-            <td>21</td>
-            <td>22</td>
-            <td>23</td>
-            <td class="gray">空缺</td>
-            <td>25</td>
-            <td>26</td>
-            <td>27</td>
-            <td>28</td>
-            <td>29</td>
-            <td class="gray">空缺</td>
-        </tr>
-        <tr>
-            <td>20160802019</td>
-            <td>20160802004</td>
-        </tr>
-    </table>
-</div>
+    <h1 class="noSelect">软件工程第<span id="week"></span>周课后作业</h1>
 
-<script>
-    //根据服务器存在的文件填充人员名单
-    (function getStatus() {
-        let xmlHttp = new XMLHttpRequest();
-        //看看把请求改为POST能不能解决Tomcat那个报错
-        xmlHttp.open('POST','show');
-        xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-        xmlHttp.send(null);
-        xmlHttp.onreadystatechange = function(){
-            let showList;
-            if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
-                let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
-                showList = plist.split(", ");
-                for (let i = 0; i < showList.length; i++) {
-                    if (showList[i].length < 15) {
-                        let sn = parseInt(showList[i].substring(0, 2)) - 1;
-                        let td = document.getElementsByTagName("td")[sn];
-                        td.innerText = showList[i];
-                        td.className = "green";
-                    } else {
-                        if (showList[i].startsWith("20160802019")) {
-                            let td = document.getElementsByTagName("td")[30];
+    <div class="visitedCount noSelect">
+        总访问次数: <span>0</span>
+    </div>
+
+    <a href="https://github.com/Yionr/upload">
+        <div class="github noSelect">
+            <img src="img/github.png" alt="" width="32px" height="32px"><span>GitHub</span>
+        </div>
+    </a>
+
+    <div class="deadline noSelect">
+        <div class="fn"></div> <div class="fu"></div> <div class="kd">:</div> <div class="sn"></div> <div class="su"></div>
+        <div class="after"></div>
+    </div>
+
+    <div class="announcementPad" style="right: -170px;">
+        <p>更新内容</p>
+        <div class="items">
+            <section class="item" >· 每次更新都伴随着未知的新BUG，请谅解</section>
+            <br>
+            <section class="item" >1. (Beta)现在，一周内再次提交作业会<strong>覆盖</strong>之前的提交</section>
+            <br>
+            <section class="item" >2. 网页使用Cookie记录用户最后一次提交信息,一定程度上提高上传效率</section>
+        </div>
+        <div class="after" onclick="roll(this)">展开</div>
+    </div>
+
+    <div class="uploadArea">
+        <form class="upload" action="uploadHomework" method="post" enctype="multipart/form-data">
+                <div class="file">
+                    <input id="file" name="file" type="file" />
+                    <input id="fileName" name="fileName" type="text" value="" hidden />
+                    <div class="info">
+                        <img src="img/circle.png" alt="" id="animation" style="display: none">
+                        <span id="fileInfo">点击或直接拖拽文件至此</span>
+                    </div>
+                </div>
+        </form>
+    </div>
+
+    <div class="serverArea">
+        <h3 class="noSelect">如果下方对应位置被点亮,说明服务器已经存在此文件:</h3>
+        <br>
+        <table class="noSelect">
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td class="gray">空缺</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>12</td>
+                <td>13</td>
+                <td>14</td>
+                <td>15</td>
+                <td>16</td>
+                <td>17</td>
+                <td>18</td>
+                <td>19</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>22</td>
+                <td>23</td>
+                <td class="gray">空缺</td>
+                <td>25</td>
+                <td>26</td>
+                <td>27</td>
+                <td>28</td>
+                <td>29</td>
+                <td class="gray">空缺</td>
+            </tr>
+            <tr>
+                <td>20160802019</td>
+                <td>20160802004</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="openline noSelect">
+        <div class="fn"></div> <div class="fu"></div> <div class="kd">:</div> <div class="sn"></div> <div class="su"></div>
+        <div class="after"></div>
+    </div>
+
+    <script>
+        //根据服务器存在的文件填充人员名单
+        (function getStatus() {
+            let xmlHttp = new XMLHttpRequest();
+            //看看把请求改为POST能不能解决Tomcat那个报错
+            xmlHttp.open('POST','show');
+            xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xmlHttp.send(null);
+            xmlHttp.onreadystatechange = function(){
+                let showList;
+                if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
+                    let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
+                    showList = plist.split(", ");
+                    for (let i = 0; i < showList.length; i++) {
+                        if (showList[i].length < 15) {
+                            let sn = parseInt(showList[i].substring(0, 2)) - 1;
+                            let td = document.getElementsByTagName("td")[sn];
                             td.innerText = showList[i];
                             td.className = "green";
+                        } else {
+                            if (showList[i].startsWith("20160802019")) {
+                                let td = document.getElementsByTagName("td")[30];
+                                td.innerText = showList[i];
+                                td.className = "green";
+                            }
+                            if (showList[i].startsWith("20160802004")) {
+                                let td = document.getElementsByTagName("td")[31];
+                                td.innerText = showList[i];
+                                td.className = "green";
+                            }
                         }
-                        if (showList[i].startsWith("20160802004")) {
-                            let td = document.getElementsByTagName("td")[31];
-                            td.innerText = showList[i];
-                            td.className = "green";
-                        }
+
                     }
-
                 }
             }
-        }
-    })();
-</script>
+        })();
+    </script>
 
-<script>
-    getAjaxConnection('POST','showVisitCount',function (xmlHttp) {
-        let countDiv = document.getElementsByClassName('visitedCount')[0];
-        let countNode = countDiv.getElementsByTagName('span')[0];
-        countNode.innerText = xmlHttp.responseText;
-    })
-</script>
+    <script>
+        getAjaxConnection('POST','showVisitCount',function (xmlHttp) {
+            let countDiv = document.getElementsByClassName('visitedCount')[0];
+            let countNode = countDiv.getElementsByTagName('span')[0];
+            countNode.innerText = xmlHttp.responseText;
+        })
+    </script>
 
-<footer>
-    <span>©2020 yionr.cloud版权所有</span>
-    <a href="http://www.beian.miit.gov.cn">浙ICP备19047112号</a>
-    <span>联系QQ:2456011735</span>
-</footer>
+    <footer>
+        <span>©2020 yionr.cloud版权所有</span>
+        <a href="http://www.beian.miit.gov.cn">浙ICP备19047112号</a>
+        <span>联系QQ:2456011735</span>
+    </footer>
 </body>
 </html>
