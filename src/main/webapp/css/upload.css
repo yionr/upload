@@ -45,23 +45,36 @@ a{
     vertical-align: top;
 }
 
-.deadline{
-    z-index: -1;
-    opacity: 0;
+.deadline,.openline{
     font-size: 32px;
     text-align: center;
     line-height: 64px;
-    width: 192px;
+    width: 190px;
     height: 64px;
     position: absolute;
-    right: 10px;
-    top: 60px;
+    right: -190px;
     background-color: greenyellow;
-    transition: 1s;
+    transition: .7s;
 }
 
-.deadline div{
+.deadline{
+    top: 60px;
+}
+
+.openline{
+    top:450px;
+}
+
+.deadline div , .openline div{
     display: inline-block;
+}
+
+.deadline .after , .openline .after{
+    position: absolute;
+    right: -20px;
+    width: 20px;
+    height: 100%;
+    background-color: #666666;
 }
 
 .uploadArea{
