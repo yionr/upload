@@ -169,7 +169,6 @@ function openTime(weekDay, hour, padName,changeColor) {
     },1000);
 
     let lastTime = new LastTime(new Date(),weekDay,hour);
-    console.log(lastTime);
 
     if (lastTime._lastDays > 0){
         timePart.setTime(lastTime._lastDays+"",'天',lastTime._lastHours+"",'时');
