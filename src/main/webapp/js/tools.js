@@ -17,7 +17,6 @@ function getWeek(startDate){
     return Math.floor(((new Date().getTime() - startDate)/1000/3600/24 + 1) / 7 + 1);
 }
 
-
 function isWorkingDay() {
     let date = new Date();
     let weekDay = date.getDay();
@@ -33,6 +32,7 @@ function isWorkingDay() {
             return false;
     return true;
 }
+
 function isPC(){
     let userAgentInfo = navigator.userAgent;
     let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
@@ -67,12 +67,89 @@ class Time {
         this._su = this._pad.getElementsByClassName('su')[0];
         this._uploadArea = document.getElementsByClassName('uploadArea')[0];
     }
+    setTime(fn,fu,sn,su){
+        this._fn.innerText = fn;
+        this._fu.innerText = fu;
+        this._sn.innerText = sn;
+        this._su.innerText = su;
+    }
+    setColor(color){
+        this._pad.style.backgroundColor = color;
+    }
+    start(){
+        this._pad.style.right = '20px';
+        let e = this;
+        setTimeout(function () {
+            e._pad.style.right = '10px';
+        },700);
+    }
 
+    flow(timeout1,timeout2,maxSn,kds,color){
+        let e = this;
+        setTimeout(function () {
+            e._sn.innerText = parseInt(e._sn.innerText) - 1;
+            if (parseInt(e._sn.innerText) === -1){
+                if (parseInt(e._fn.innerText) > 0){
+                    e._fn.innerText = parseInt(e._fn.innerText) - 1;
+                    e._sn.innerText = maxSn;
+                }
+                else{
+                    dropTime(e._padName,e,kds,sns,color);
+                }
+            }
+            let sns = setInterval(function () {
+                e._sn.innerText = parseInt(e._sn.innerText) - 1;
+                if (parseInt(e._sn.innerText) === -1){
+                    if (parseInt(e._fn.innerText) > 0){
+                        e._fn.innerText = parseInt(e._fn.innerText) - 1;
+                        e._sn.innerText = maxSn;
+                    }
+                    else{
+                        dropTime(e._padName,e,kds,sns,color);
+                    }
+                }
+            },timeout1);
+        },timeout2)
+    }
+
+}
+
+class LastTime{
+    _lastDays;
+    _lastHours;
+    _lastMinuts;
+    _lastSeconds;
+    _lastMillSeconds;
+
+    constructor(now,targetWeekDay,targetHour) {
+
+        this._lastDays = targetWeekDay - now.getDay();
+        //修正1小时
+        this._lastHours = targetHour - 1 - now.getHours();
+        //修正1分钟
+        this._lastMinuts = 59 - now.getMinutes();
+
+        this._lastSeconds = 60 - now.getSeconds();
+
+        this._lastMillSeconds = 1000 - now.getMilliseconds();
+        if (this._lastHours < 0){
+            this._lastDays--;
+            this._lastHours += 24;
+        }
+        //test
+        // this._lastDays = this._lastHours = 0;
+        // this._lastDays = this._lastHours = 0;
+        // this._lastMinuts = 1;
+        // this._lastSeconds = 0;
+
+    }
 }
 
 function openTime(weekDay, hour, padName,changeColor) {
 
     let timePart = new Time(padName);
+
+    timePart.start();
 
     //四档为: >1day , <1day , <1hour , deadline
     let color;
@@ -91,103 +168,24 @@ function openTime(weekDay, hour, padName,changeColor) {
         timePart._kd.style.opacity = tempKd;
     },1000);
 
-    let date = new Date();
+    let lastTime = new LastTime(new Date(),weekDay,hour);
+    console.log(lastTime);
 
-    let lastDays = weekDay - date.getDay();
-    //修正1小时
-    let lastHours = hour - 1 - date.getHours();
-    //修正1分钟
-    let lastMinuts = 59 - date.getMinutes();
-
-    let lastSeconds = 60 - date.getSeconds();
-
-    let lastMillSeconds = 1000 - date.getMilliseconds();
-
-    //修正中午12点
-    if (lastHours < 0){
-        lastDays--;
-        lastHours += 24;
+    if (lastTime._lastDays > 0){
+        timePart.setTime(lastTime._lastDays+"",'天',lastTime._lastHours+"",'时');
+        timePart.setColor(color[0]);
+        timePart.flow(3600000,lastTime._lastMinuts * 60 * 1000,'23',kds,color);
     }
-
-    //test
-    // lastDays = lastHours = 0;
-    // lastDays = lastHours = lastMinuts = 0;
-    // lastSeconds = 10;
-
-    //设置 fn 和 sn 的初始数值
-
-    if (lastDays > 0){
-        timePart._fu.innerText = '天';
-        timePart._su.innerText = '时';
-        timePart._fn.innerText = lastDays+"";
-        timePart._sn.innerText = lastHours+"";
-        timePart._pad.style.backgroundColor = color[0];
-        setTimeout(function () {
-            timePart._sn.innerText = parseInt(timePart._sn.innerText) - 1;
-            let sns = setInterval(function () {
-                timePart._sn.innerText = parseInt(timePart._sn.innerText) - 1;
-                if (parseInt(timePart._sn.innerText) === -1){
-                    if (parseInt(timePart._fn.innerText) > 0){
-                        timePart._fn.innerText = parseInt(timePart._fn.innerText) - 1;
-                        timePart._sn.innerText = '23';
-                    }
-                    else{
-                        dropTime(padName,timePart,kds,sns,color);
-                    }
-                }
-            },3600000)
-        },lastMinuts*60*1000)
-    }
-    else if (lastHours > 0){
-        timePart._fu.innerText = '时';
-        timePart._su.innerText = '分';
-        timePart._fn.innerText = lastHours+"";
-        timePart._sn.innerText = lastMinuts+"";
-        timePart._pad.style.backgroundColor = color[1];
-
-        setTimeout(function () {
-            timePart._sn.innerText = parseInt(timePart._sn.innerText) - 1;
-            let sns = setInterval(function () {
-                timePart._sn.innerText = parseInt(timePart._sn.innerText) - 1;
-                if (parseInt(sn.innerText) === -1){
-                    if (parseInt(timePart._fn.innerText) > 0){
-                        timePart._fn.innerText = parseInt(timePart._fn.innerText) - 1;
-                        timePart._sn.innerText = '59';
-                    }
-                    else{
-                        dropTime(padName,timePart,kds,sns,color);
-                    }
-                }
-            },60000)
-        },lastSeconds*1000)
-
+    else if (lastTime._lastHours > 0){
+        timePart.setTime(lastTime._lastHours+"",'时',lastTime._lastMinuts+"",'分');
+        timePart.setColor(color[1]);
+        timePart.flow(60000,lastTime._lastSeconds * 1000,'59',kds,color);
     }
     else{
-        timePart._fu.innerText = '分';
-        timePart._su.innerText = '秒';
-        timePart._fn.innerText = lastMinuts+"";
-        timePart._sn.innerText = lastSeconds+"";
-        timePart._pad.style.backgroundColor = color[2];
-
-        setTimeout(function () {
-            let sns = setInterval(function () {
-                timePart._sn.innerText = parseInt(timePart._sn.innerText) - 1;
-                if (parseInt(timePart._sn.innerText) === -1) {
-                    if(parseInt(timePart._fn.innerText) > 0){
-                        timePart._fn.innerText = parseInt(timePart._fn.innerText) - 1;
-                        timePart._sn.innerText = '59';
-                    }
-                    else{
-                        dropTime(padName,timePart,kds,sns,color);
-                    }
-                }
-            },1000);
-        },lastMillSeconds);
+        timePart.setTime(lastTime._lastMinuts+"",'分',lastTime._lastSeconds+"",'秒');
+        timePart.setColor(color[2]);
+        timePart.flow(1000,lastTime._lastMillSeconds,'59',kds,color);
     }
-    timePart._pad.style.right = '20px';
-    setTimeout(function () {
-        timePart._pad.style.right = '10px';
-    },700);
 }
 
 function dropTime(padName, timePart, kds, sns, color){
