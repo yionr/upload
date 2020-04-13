@@ -120,6 +120,9 @@
             xmlHttp.onreadystatechange = function(){
                 let showList;
                 if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
+                    //如果服务器还没有文件的话,则直接返回
+                    if(xmlHttp.responseText.length === 0)
+                        return;
                     let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
                     showList = plist.split(", ");
                     for (let i = 0; i < showList.length; i++) {
