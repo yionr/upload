@@ -3,13 +3,17 @@ window.onload = function () {
     if (isWorkingDay()){
         openUploadEntrance();
         openDeadLine();
-
-        setInterval(function () {
+        if (isPC()){
             let announcementPad = document.getElementsByClassName('announcementPad')[0];
-            let anInfo = announcementPad.getElementsByClassName('after')[0];
-            anInfo.innerText = '收起';
-            announcementPad.style.right = '0';
-        },1000);
+            announcementPad.style.display='block';
+            setTimeout(function () {
+
+                let anInfo = announcementPad.getElementsByClassName('after')[0];
+                anInfo.innerText = '收起';
+                announcementPad.style.right = '0';
+            },1000);
+
+        }
     }
     //非工作日：打开倒计时 倒计时到了展开上传框   不过如果打开倒计时的话，位置呢？肯定会撞，另外如果不放倒计时，那么早上8点，应该也没人会看这个网页，那么做上传框好像没有太大用处，这个暂时不做，因为没有价值
     else{
