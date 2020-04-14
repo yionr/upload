@@ -36,7 +36,6 @@ public class UploadController {
     @RequestMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, PermissionDeniedException, SqlQueryException {
 
-//空指针报错是因为跳过reviseController了？
         logger.info("文件: " + fileName + " 开始上传至服务器:");
 
         if (!dateTool.isWorkingDay()) {
@@ -46,6 +45,7 @@ public class UploadController {
 
 
 //        到这儿，肯定是学号+姓名的形式了，学号存在2位和11位的情况 11位两个学号是确定的，2位可以是随意两位
+//        之所以有这个二次校验,是因为,用户可以通过修改js,跳过reviseController直接来到这
         String fileName_suf = fileName.split("\\.")[0];
 //        根据fileName获取id
         String id = fileName_suf.split("\\D+$")[0];
@@ -54,6 +54,7 @@ public class UploadController {
         logger.info("切分出学号为: " + id + " 姓名为: " + name +" 接下来根据姓名比对数据库数据,二次确认命名正确" );
         Student student = studentService.FindByName(name);
         logger.info("查找到的结果为: " + student);
+
         if (!(student == null)) {
 //            这里要分两种情况，学号2位和11位
 //            11位不要标出来，主要应对的是'19吴伟'这种情况
@@ -68,23 +69,20 @@ public class UploadController {
                 //创建作业
                 File homeWork = new File(CurrentWeekDir, fileName);
 //                判断作业是否存在，将所有作业都提取出来，放到集合里面去，可以以全名的方式提取，也可以以前缀的方式提取
-//                if (homeWork.exists())
-//                    throw new SysException("服务器上已经存在此作业!");
+
 //                通过文件前缀名，而不是之前的完整文件名来判断
                 if (serverFileTool.getFileListWithoutSuf().contains(fileName.split("\\.")[0])){
                     logger.warn("服务器上已经存在此作业");
 //                    判断ip
-                    String lastIP = null;
-                    if (id.length() == 2)
-                        lastIP= studentService.FindByLastId("2017%" + id).getLastIP();
-                    else if(id.length() == 11)
-                        lastIP = studentService.FindById(id).getLastIP();
+                    String lastIP = studentService.FindById(id).getLastIP();
                     logger.info("ip is: " + lastIP);
 //                    这个在本地无法测试，因为本地是带端口的，但是作为beta功能，可以直接发布
                     if (request.getRemoteAddr().equals(lastIP)){
                         logger.info("此次提交ip与该用户上次提交ip相同，判定为用户自己提交的，即将覆盖原文件:");
                         try {
-                            homeWork.delete();
+//                            删除根据学号姓名前缀查到的第一个文件,而不是当前名字的文件,这样能解决用户前后上传不同名文件,虽然能成功,但是结果服务器存了两个文件,原来那个文件没有删掉
+//                            这样其实从某个角度,还是可能会有bug,如果返回的是所有这个前缀的文件名列表,然后所有删除才是最保险的.以后再说吧
+                            serverFileTool.getFileByPre(fileName_suf).delete();
                             homeWork.createNewFile();
                             file.transferTo(homeWork);
                             return "success";
