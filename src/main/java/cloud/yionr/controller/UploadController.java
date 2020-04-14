@@ -34,7 +34,7 @@ public class UploadController {
     private Logger logger = Logger.getLogger(UploadController.class);
 
     @RequestMapping("/uploadHomework")
-    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, FileAlreadyExsitsException, PermissionDeniedException, SqlQueryException {
+    public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, PermissionDeniedException, SqlQueryException {
 
 //空指针报错是因为跳过reviseController了？
         logger.info("文件: " + fileName + " 开始上传至服务器:");
@@ -51,8 +51,9 @@ public class UploadController {
         String id = fileName_suf.split("\\D+$")[0];
 //        获取name    1好像和split的特性有关，暂时不是很清楚
         String name = fileName_suf.split("^\\d+")[1];
-
+        logger.info("切分出学号为: " + id + " 姓名为: " + name +" 接下来根据姓名比对数据库数据,二次确认命名正确" );
         Student student = studentService.FindByName(name);
+        logger.info("查找到的结果为: " + student);
         if (!(student == null)) {
 //            这里要分两种情况，学号2位和11位
 //            11位不要标出来，主要应对的是'19吴伟'这种情况
@@ -97,7 +98,7 @@ public class UploadController {
                     }
                     else{
                         logger.warn("更新文件时的ip和提交时的ip不同，没有权限更新文件!");
-                        throw new PermissionDeniedException("您的IP地址与提交文件时的IP地址不符，没有权限更新文件!");
+                        throw new PermissionDeniedException("您没有权限更新文件!");
                     }
                 }
 
@@ -109,8 +110,14 @@ public class UploadController {
 
 //                    将ip记录到数据库
                     Student student1 = new Student();
-                    student1.setId(id);
-                    student.setLastIP(request.getRemoteAddr());
+
+                    if (id.length() == 2)
+                        student1.setId("201708161" + id);
+                    else if (id.length() == 11)
+                        student1.setId(id);
+
+                    student1.setLastIP(request.getRemoteAddr());
+                    logger.info("即将更新学号: " + student1.getId() + " 用户的ip为: " + student1.getLastIP());
                     try {
                         studentService.updateIP(student1);
                         logger.info("更新id: " + id + "的IP成功！");
