@@ -121,6 +121,7 @@
                 let showList;
                 if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
                     //如果服务器还没有文件的话,则直接返回(空返回 内容为'[]' 长度是 2  因为是用 json 交互的)
+                    console.log(xmlHttp.responseText);
                     if(xmlHttp.responseText.length === 2)
                         return;
                     let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
