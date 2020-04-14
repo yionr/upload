@@ -31,7 +31,7 @@ public class DateTool {
         if (getWeekDay() == DayOfWeek.WEDNESDAY || getWeekDay() == DayOfWeek.THURSDAY )
             return true;
         else if (getWeekDay() == DayOfWeek.TUESDAY)
-            if (getHour() > 8)
+            if (getHour() >= 8)
                 return true;
         else if (getWeekDay() == DayOfWeek.FRIDAY)
             if (getHour() < 12)
