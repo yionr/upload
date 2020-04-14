@@ -17,7 +17,7 @@ public class ShowController {
     @RequestMapping("/show")
     public String show(){
         log4jUtils.addVisitCount();
-        return serverFileTool.getFileListWithSuf().toString();
+        return serverFileTool.getFileList().toString();
     }
 
     @RequestMapping("/showVisitCount")
