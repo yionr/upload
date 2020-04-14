@@ -65,10 +65,8 @@ public class ReviseController {
         }
 //        如果姓名无法识别，则根据学号来查找
         else{
-            if (id.length() == 11)
+            if (id.length() == 2 || id.length() == 11)
                 student = studentService.FindById(id);
-            else if (id.length() == 2)
-                student = studentService.FindByLastId("2017%" + id);
             else{
 //如果学号不是2 or 11 位，则认为这个文件命名无法接受，接下来查cookie
                 String cookieUserInfo;
