@@ -25,13 +25,15 @@ public class ServerFileTool {
             e.printStackTrace();
         }
     }
-    public List<String> getFileListWithSuf(){
+    public List<String> getFileList(){
         File file = new File(properties.getProperty("homeWorkRoot") , dateTool.getWeek()+"");
         if (!file.exists())
             file.mkdirs();
         //不断读文件夹里面的文件,每读一个提取文件名放入数组
         File[] files = file.listFiles();
         ArrayList<String> arrayList = new ArrayList<>();
+        if (files == null)
+            return null;
         for (File fileItem :
                 files) {
             arrayList.add(fileItem.getName());
@@ -39,7 +41,7 @@ public class ServerFileTool {
         return arrayList;
     }
     public List<String> getFileListWithoutSuf(){
-        List<String> fileListWithSuf = getFileListWithSuf();
+        List<String> fileListWithSuf = getFileList();
         List<String> fileListWithoutSuf = new ArrayList<>();
         for (String fileItem:
         fileListWithSuf){
@@ -47,5 +49,17 @@ public class ServerFileTool {
             fileListWithoutSuf.add(fileItemWithoutSuf);
         }
         return fileListWithoutSuf;
+    }
+    public File getFileByPre(String filePre){
+        File file = new File(properties.getProperty("homeWorkRoot") , dateTool.getWeek()+"");
+        File[] files = file.listFiles();
+        if (files == null)
+            return null;
+        for (File fileItem :
+                files) {
+            if (fileItem.getName().startsWith(filePre))
+                return fileItem;
+        }
+        return null;
     }
 }
