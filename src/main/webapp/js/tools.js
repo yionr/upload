@@ -49,14 +49,14 @@ function openUploadEntrance(){
 }
 
 class Time {
-    _padName;
-    _pad;
-    _fn;
-    _fu;
-    _kd;
-    _sn;
-    _su;
-    _uploadArea;
+    // _padName;
+    // _pad;
+    // _fn;
+    // _fu;
+    // _kd;
+    // _sn;
+    // _su;
+    // _uploadArea;
     constructor(padName) {
         this._padName = padName;
         this._pad = document.getElementsByClassName(padName)[0];
@@ -115,11 +115,11 @@ class Time {
 }
 
 class LastTime{
-    _lastDays;
-    _lastHours;
-    _lastMinuts;
-    _lastSeconds;
-    _lastMillSeconds;
+    // _lastDays;
+    // _lastHours;
+    // _lastMinuts;
+    // _lastSeconds;
+    // _lastMillSeconds;
 
     constructor(now,targetWeekDay,targetHour) {
 
