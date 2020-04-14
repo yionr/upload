@@ -13,11 +13,14 @@ public class StudentService {
     public Student FindByName(String name){
         return dao.findByName(name);
     }
+//    FindById 无论传入的是两位学号还是 11 位学号,都能查
     public Student FindById(String id){
-        return dao.findById(id);
-    }
-    public Student FindByLastId(String lastId){
-        return dao.findByLastId(lastId);
+        if (id.length() == 2)
+            return dao.findByLastId("2017%" + id);
+        else if (id.length() == 11)
+            return dao.findById(id);
+        else
+            return null;
     }
     public boolean updateIP(Student student){
         return dao.updateIP(student);
