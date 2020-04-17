@@ -28,14 +28,17 @@ public class DateTool {
     }
     public boolean isWorkingDay(){
 //        周二8点至周五12点为工作日
-        if (getWeekDay() == DayOfWeek.WEDNESDAY || getWeekDay() == DayOfWeek.THURSDAY )
+        if (getWeekDay() == DayOfWeek.WEDNESDAY || getWeekDay() == DayOfWeek.THURSDAY ){
             return true;
-        else if (getWeekDay() == DayOfWeek.TUESDAY)
+        }
+        else if (getWeekDay() == DayOfWeek.TUESDAY){
             if (getHour() >= 8)
                 return true;
-        else if (getWeekDay() == DayOfWeek.FRIDAY)
+        }
+        else if (getWeekDay() == DayOfWeek.FRIDAY){
             if (getHour() < 12)
                 return true;
-            return false;
+        }
+        return false;
     }
 }
