@@ -122,8 +122,8 @@ class LastTime{
     // _lastMillSeconds;
 
     constructor(now,targetWeekDay,targetHour) {
-
-        this._lastDays = targetWeekDay - now.getDay();
+        //传入2.8 倒计时不准确  2 - 5 = 3 小于0 则一周时间(到下一周了u)
+        this._lastDays = targetWeekDay - now.getDay() < 0 ? targetWeekDay - now.getDay() + 7 : targetWeekDay - now.getDay();
         //修正1小时
         this._lastHours = targetHour - 1 - now.getHours();
         //修正1分钟
@@ -136,6 +136,7 @@ class LastTime{
             this._lastDays--;
             this._lastHours += 24;
         }
+        console.log(this._lastDays + " , " + this._lastHours + " , " + this._lastMinuts);
         //test
         // this._lastDays = this._lastHours = 0;
         // this._lastDays = this._lastHours = 0;
