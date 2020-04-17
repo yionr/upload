@@ -224,7 +224,7 @@ function dropTime(padName, timePart, kds, sns, color){
 
     //一秒钟之后收起这个倒计时
     setTimeout(function () {
-        timePart._pad.style.right = '-190px';
+        timePart._pad.style.right = '-200px';
     },1000);
 
     //两秒钟之后改变上传框高度

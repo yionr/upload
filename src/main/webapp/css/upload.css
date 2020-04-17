@@ -49,10 +49,10 @@ a{
     font-size: 32px;
     text-align: center;
     line-height: 64px;
-    width: 190px;
+    width: 200px;
     height: 64px;
     position: absolute;
-    right: -190px;
+    right: -200px;
     background-color: greenyellow;
     transition: .7s;
 }
