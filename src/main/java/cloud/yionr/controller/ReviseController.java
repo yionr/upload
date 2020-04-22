@@ -6,6 +6,7 @@ import cloud.yionr.entity.Student;
 import cloud.yionr.service.StudentService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class ReviseController {
 
     private Logger logger = Logger.getLogger(ReviseController.class);
 
-    @RequestMapping("revise")
+    @PostMapping("revise")
     public String revise(String id, String name, String oFName, HttpServletRequest request) throws UnsupportedEncodingException, SqlQueryException {
 
         if (!dateTool.isWorkingDay()) {

@@ -3,6 +3,7 @@ package cloud.yionr.controller;
 import cloud.yionr.common.Log4jUtils;
 import cloud.yionr.common.ServerFileTool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ public class ShowController {
     @Autowired
     Log4jUtils log4jUtils;
 
-    @RequestMapping("/show")
+    @GetMapping("/show")
     public String show(){
         log4jUtils.addVisitCount();
         return serverFileTool.getFileList().toString();

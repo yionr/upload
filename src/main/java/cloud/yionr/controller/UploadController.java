@@ -8,6 +8,7 @@ import cloud.yionr.service.StudentService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +34,7 @@ public class UploadController {
 
     private Logger logger = Logger.getLogger(UploadController.class);
 
-    @RequestMapping("/uploadHomework")
+    @PostMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, PermissionDeniedException, SqlQueryException {
 
         logger.info("文件: " + fileName + " 开始上传至服务器:");
