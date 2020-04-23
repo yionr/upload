@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.time.DayOfWeek;
 
 @Controller
 public class UploadController {
@@ -42,6 +40,7 @@ public class UploadController {
         if (!dateTool.isWorkingDay()) {
             logger.warn("当前时间禁止提交作业");
             logger.info("-----------------FAIL----------------");
+            logger.info("###########################################################");
             throw new NotInTimeException("当前时间禁止提交作业");
         }
 
@@ -90,20 +89,24 @@ public class UploadController {
                             file.transferTo(homeWork);
                             logger.info("新文件写入成功");
                             logger.info("---------------SUCCESS---------------");
+                            logger.info("###########################################################");
                             return "success";
                         }
                         catch (Exception e){
                             logger.info("-----------------FAIL----------------");
+                            logger.info("###########################################################");
                             throw new SysException("在服务器上更新文件时遇到未知错误，更新失败!");
                         }
                     }
                     else if (lastIP == null){
                         logger.info("-----------------FAIL----------------");
+                        logger.info("###########################################################");
                         throw new SqlQueryException("查询上次提交IP失败，故无法确定权限，请重试!");
                     }
                     else{
                         logger.warn("更新文件时的ip和提交时的ip不同，没有权限更新文件!");
                         logger.info("-----------------FAIL----------------");
+                        logger.info("###########################################################");
                         throw new PermissionDeniedException("您没有权限更新文件!");
                     }
                 }
@@ -127,10 +130,10 @@ public class UploadController {
                     try {
                         studentService.updateIP(student1);
                         logger.info("更新id: " + id + "的IP成功！");
-                        logger.info("---------------SUCCESS---------------");
                     } catch (Exception e) {
                         logger.warn("更新IP失败。");
                         logger.info("-----------------FAIL----------------");
+                        logger.info("###########################################################");
                     }
 
 //                    附加cookie
@@ -140,15 +143,18 @@ public class UploadController {
                     response.addCookie(cookie);
                     logger.info("cookie附加成功");
                     logger.info("---------------SUCCESS---------------");
+                    logger.info("###########################################################");
                     return "success";
                 } catch (IOException e) {
                     logger.info("-----------------FAIL----------------");
+                    logger.info("###########################################################");
                     throw new SysException("在服务器上创建文件时遇到未知错误，上传失败!");
                 }
             }
         }
         else{
             logger.info("-----------------FAIL----------------");
+            logger.info("###########################################################");
             throw new StudentNotFoundException("数据库中无"+ name + "的记录！");
         }
     }
