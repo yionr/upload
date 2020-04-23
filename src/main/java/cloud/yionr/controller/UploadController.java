@@ -41,6 +41,7 @@ public class UploadController {
 
         if (!dateTool.isWorkingDay()) {
             logger.warn("当前时间禁止提交作业");
+            logger.info("-----------------FAIL----------------");
             throw new NotInTimeException("当前时间禁止提交作业");
         }
 
@@ -84,19 +85,25 @@ public class UploadController {
 //                            删除根据学号姓名前缀查到的第一个文件,而不是当前名字的文件,这样能解决用户前后上传不同名文件,虽然能成功,但是结果服务器存了两个文件,原来那个文件没有删掉
 //                            这样其实从某个角度,还是可能会有bug,如果返回的是所有这个前缀的文件名列表,然后所有删除才是最保险的.以后再说吧
                             serverFileTool.getFileByPre(fileName_suf).delete();
+                            logger.info("原文件删除成功");
                             homeWork.createNewFile();
                             file.transferTo(homeWork);
+                            logger.info("新文件写入成功");
+                            logger.info("---------------SUCCESS---------------");
                             return "success";
                         }
                         catch (Exception e){
+                            logger.info("-----------------FAIL----------------");
                             throw new SysException("在服务器上更新文件时遇到未知错误，更新失败!");
                         }
                     }
                     else if (lastIP == null){
+                        logger.info("-----------------FAIL----------------");
                         throw new SqlQueryException("查询上次提交IP失败，故无法确定权限，请重试!");
                     }
                     else{
                         logger.warn("更新文件时的ip和提交时的ip不同，没有权限更新文件!");
+                        logger.info("-----------------FAIL----------------");
                         throw new PermissionDeniedException("您没有权限更新文件!");
                     }
                 }
@@ -120,8 +127,10 @@ public class UploadController {
                     try {
                         studentService.updateIP(student1);
                         logger.info("更新id: " + id + "的IP成功！");
+                        logger.info("---------------SUCCESS---------------");
                     } catch (Exception e) {
                         logger.warn("更新IP失败。");
+                        logger.info("-----------------FAIL----------------");
                     }
 
 //                    附加cookie
@@ -130,13 +139,16 @@ public class UploadController {
                     cookie.setMaxAge(15768000);
                     response.addCookie(cookie);
                     logger.info("cookie附加成功");
+                    logger.info("---------------SUCCESS---------------");
                     return "success";
                 } catch (IOException e) {
+                    logger.info("-----------------FAIL----------------");
                     throw new SysException("在服务器上创建文件时遇到未知错误，上传失败!");
                 }
             }
         }
         else{
+            logger.info("-----------------FAIL----------------");
             throw new StudentNotFoundException("数据库中无"+ name + "的记录！");
         }
     }

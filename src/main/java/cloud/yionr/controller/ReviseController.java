@@ -28,8 +28,11 @@ public class ReviseController {
     @PostMapping("revise")
     public String revise(String id, String name, String oFName, HttpServletRequest request) throws UnsupportedEncodingException, SqlQueryException {
 
+        logger.info("---------------START---------------");
+
         if (!dateTool.isWorkingDay()) {
-                logger.warn("用户ip: " + request.getRemoteAddr() + " 文件名:  " + oFName + "  试图在禁止上传的时间点上传文件，已拦截");
+            logger.warn("用户ip: " + request.getRemoteAddr() + " 文件名:  " + oFName + "  试图在禁止上传的时间点上传文件，已拦截");
+            logger.info("-----------------FAIL----------------");
                 return "over";
         }
 
@@ -45,6 +48,7 @@ public class ReviseController {
             student = studentService.FindByName(name);  //这里，如果name是null的话，是不会报错的
         } catch (Exception e) {
             logger.warn("查询数据库过程中出现异常!");
+            logger.info("---------------START---------------");
             throw new SqlQueryException("查询数据库过程中出现异常!");
         }
 //        如果根据姓名找到了这个学生的话，进一步判断正确学号
