@@ -1,9 +1,9 @@
-package cloud.yionr.Exception;
+package cn.yionr.Exception;
 
-public class IdNotMatchException extends Exception {
+public class SqlQueryException extends Exception {
     private String message;
 
-    public IdNotMatchException(String message) {
+    public SqlQueryException(String message) {
         this.message = message;
     }
 

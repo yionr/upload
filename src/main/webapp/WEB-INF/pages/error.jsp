@@ -11,7 +11,7 @@ ${msg}
 <hr/>
 <h3>请将以上信息反馈给管理员,将在下个版本得到解决</h3>
 
-<%--<a href="https://upload.yionr.cloud">返回</a>--%>
+<%--<a href="https://upload.yionr.cn">返回</a>--%>
 <a href="http://localhost:8080/upload/">返回</a>
 </body>
 </html>

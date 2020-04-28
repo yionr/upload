@@ -1,6 +1,6 @@
-package cloud.yionr.common;
+package cn.yionr.common;
 
-import cloud.yionr.controller.UploadController;
+import cn.yionr.controller.UploadController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

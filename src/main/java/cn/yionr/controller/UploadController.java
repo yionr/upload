@@ -1,10 +1,10 @@
-package cloud.yionr.controller;
+package cn.yionr.controller;
 
-import cloud.yionr.Exception.*;
-import cloud.yionr.common.DateTool;
-import cloud.yionr.common.ServerFileTool;
-import cloud.yionr.entity.Student;
-import cloud.yionr.service.StudentService;
+import cn.yionr.Exception.*;
+import cn.yionr.common.DateTool;
+import cn.yionr.common.ServerFileTool;
+import cn.yionr.entity.Student;
+import cn.yionr.service.StudentService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

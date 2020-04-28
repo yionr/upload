@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/context
        https://www.springframework.org/schema/context/spring-context.xsd">
 <!--    注解扫描-->
-    <context:component-scan base-package="cloud.yionr.*">
+    <context:component-scan base-package="cn.yionr.*">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 <!--引入资源-->
@@ -28,7 +28,7 @@
     </bean>
     <!--    配置dao接口所在包-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cloud.yionr.dao" />
+        <property name="basePackage" value="cn.yionr.dao" />
     </bean>
 
 </beans>

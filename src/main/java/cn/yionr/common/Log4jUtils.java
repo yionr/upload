@@ -1,6 +1,6 @@
-package cloud.yionr.common;
+package cn.yionr.common;
 
-import cloud.yionr.controller.UploadController;
+import cn.yionr.controller.UploadController;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 

@@ -1,9 +1,9 @@
-package cloud.yionr.Exception;
+package cn.yionr.Exception;
 
-public class SqlQueryException extends Exception {
+public class StudentNotFoundException extends Exception {
     private String message;
 
-    public SqlQueryException(String message) {
+    public StudentNotFoundException(String message) {
         this.message = message;
     }
 

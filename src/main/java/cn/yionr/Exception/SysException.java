@@ -1,9 +1,9 @@
-package cloud.yionr.Exception;
+package cn.yionr.Exception;
 
-public class StudentNotFoundException extends Exception {
+public class SysException extends Exception {
     private String message;
 
-    public StudentNotFoundException(String message) {
+    public SysException(String message) {
         this.message = message;
     }
 

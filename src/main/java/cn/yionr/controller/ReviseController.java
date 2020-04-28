@@ -1,13 +1,12 @@
-package cloud.yionr.controller;
+package cn.yionr.controller;
 
-import cloud.yionr.Exception.SqlQueryException;
-import cloud.yionr.common.DateTool;
-import cloud.yionr.entity.Student;
-import cloud.yionr.service.StudentService;
+import cn.yionr.Exception.SqlQueryException;
+import cn.yionr.common.DateTool;
+import cn.yionr.entity.Student;
+import cn.yionr.service.StudentService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;

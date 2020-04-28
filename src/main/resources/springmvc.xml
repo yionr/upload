@@ -19,7 +19,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 <!--    注解扫描-->
-    <context:component-scan base-package="cloud.yionr">
+    <context:component-scan base-package="cn.yionr">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 <!--    视图解析器-->
@@ -28,7 +28,7 @@
         <property name="suffix" value=".jsp" />
     </bean>
 <!--    异常处理-->
-        <bean id="exceptionResolver" class="cloud.yionr.Exception.ExceptionResolver" />
+        <bean id="exceptionResolver" class="cn.yionr.Exception.ExceptionResolver" />
 <!--    上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 <!--        所有上传内容总和不能超过1G-->

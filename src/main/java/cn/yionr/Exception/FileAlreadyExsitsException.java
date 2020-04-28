@@ -1,9 +1,9 @@
-package cloud.yionr.Exception;
+package cn.yionr.Exception;
 
-public class PermissionDeniedException extends Exception {
+public class FileAlreadyExsitsException extends Exception {
     private String message;
 
-    public PermissionDeniedException(String message) {
+    public FileAlreadyExsitsException(String message) {
         this.message = message;
     }
 

@@ -1,4 +1,4 @@
-package cloud.yionr.Exception;
+package cn.yionr.Exception;
 
 public class NotInTimeException extends Exception {
     private String message;

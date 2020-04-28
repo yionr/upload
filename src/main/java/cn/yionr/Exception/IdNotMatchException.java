@@ -1,9 +1,9 @@
-package cloud.yionr.Exception;
+package cn.yionr.Exception;
 
-public class SysException extends Exception {
+public class IdNotMatchException extends Exception {
     private String message;
 
-    public SysException(String message) {
+    public IdNotMatchException(String message) {
         this.message = message;
     }
 

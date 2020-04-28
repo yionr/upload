@@ -1,4 +1,4 @@
-package cloud.yionr.common;
+package cn.yionr.common;
 
 import org.springframework.stereotype.Component;
 
