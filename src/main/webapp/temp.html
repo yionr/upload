@@ -8,7 +8,8 @@
 这个是中间页，防止表单重复提交
 <script>
     (function () {
-        window.location.href = localStorage.getItem('mainPage')
+        let mainPage = localStorage.getItem('mainPage')
+        window.location.href = mainPage
     })();
 </script>
 </body>
