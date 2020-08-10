@@ -48,8 +48,18 @@
 </div>
 <p>上传成功</p>
 <div class="return">
-<%--    <a href="https://upload.yionr.cn">点此返回</a>--%>
-    <a href="http://localhost:8080/upload/">点此返回</a>
+    <a href="#" id="ret">点此返回</a>
 </div>
+
+
+
+<script>
+    history.pushState(null, '', 'temp.html')
+    let a = document.getElementById('ret');
+    let mainPage = localStorage.getItem('mainPage')
+    a.onclick = function(){
+        location.href = mainPage
+    }
+</script>
 </body>
 </html>

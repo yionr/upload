@@ -49,14 +49,6 @@ function openUploadEntrance(){
 }
 
 class Time {
-    // _padName;
-    // _pad;
-    // _fn;
-    // _fu;
-    // _kd;
-    // _sn;
-    // _su;
-    // _uploadArea;
     constructor(padName) {
         this._padName = padName;
         this._pad = document.getElementsByClassName(padName)[0];
@@ -115,11 +107,6 @@ class Time {
 }
 
 class LastTime{
-    // _lastDays;
-    // _lastHours;
-    // _lastMinuts;
-    // _lastSeconds;
-    // _lastMillSeconds;
 
     constructor(now,targetWeekDay,targetHour) {
         //传入2.8 倒计时不准确  2 - 5 = 3 小于0 则一周时间(到下一周了u)

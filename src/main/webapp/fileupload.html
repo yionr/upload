@@ -110,6 +110,10 @@
     </div>
 
     <script>
+        if(!localStorage.getItem('mainPage')){
+            localStorage.setItem('mainPage',location.href)
+        }
+
         //根据服务器存在的文件填充人员名单
         (function getStatus() {
             let xmlHttp = new XMLHttpRequest();

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>临时</title>
+</head>
+<body>
+这个是中间页，防止表单重复提交
+<script>
+    (function () {
+        let mainPage = localStorage.getItem('mainPage')
+        window.location.href = mainPage
+    })();
+</script>
+</body>
+</html>
