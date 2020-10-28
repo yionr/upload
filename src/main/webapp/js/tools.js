@@ -1,14 +1,3 @@
-function getAjaxConnection(method,url,readyFunc){
-    let xmlHttp = new XMLHttpRequest();
-    xmlHttp.open(method,url);
-    xmlHttp.send(null);
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
-            readyFunc(xmlHttp);
-        }
-    }
-}
-
 /**
  * 根据一个基本日得到当前日期相对于基本日是第几周
  * @param startDate date.getTime()形式
@@ -44,68 +33,60 @@ function isPC(){
 }
 
 function openUploadEntrance(){
-    let uploadArea = document.getElementsByClassName("uploadArea")[0];
+    let uploadArea = $(".uploadArea");
     uploadArea.style.height = '55%';
 }
 
 class Time {
-    // _padName;
-    // _pad;
-    // _fn;
-    // _fu;
-    // _kd;
-    // _sn;
-    // _su;
-    // _uploadArea;
     constructor(padName) {
-        this._padName = padName;
-        this._pad = document.getElementsByClassName(padName)[0];
-        this._fn = this._pad.getElementsByClassName('fn')[0];
-        this._fu = this._pad.getElementsByClassName('fu')[0];
-        this._kd = this._pad.getElementsByClassName('kd')[0];
-        this._sn = this._pad.getElementsByClassName('sn')[0];
-        this._su = this._pad.getElementsByClassName('su')[0];
-        this._uploadArea = document.getElementsByClassName('uploadArea')[0];
+        this.padName = padName;
+        this.pad = document.getElementsByClassName(padName)[0];
+        this.fn = this.pad.getElementsByClassName('fn')[0];
+        this.fu = this.pad.getElementsByClassName('fu')[0];
+        this.kd = this.pad.getElementsByClassName('kd')[0];
+        this.sn = this.pad.getElementsByClassName('sn')[0];
+        this.su = this.pad.getElementsByClassName('su')[0];
+        this.uploadArea = document.getElementsByClassName('uploadArea')[0];
     }
     setTime(fn,fu,sn,su){
-        this._fn.innerText = fn;
-        this._fu.innerText = fu;
-        this._sn.innerText = sn;
-        this._su.innerText = su;
+        this.fn.innerText = fn;
+        this.fu.innerText = fu;
+        this.sn.innerText = sn;
+        this.su.innerText = su;
     }
     setColor(color){
-        this._pad.style.backgroundColor = color;
+        this.pad.style.backgroundColor = color;
     }
     start(){
-        this._pad.style.right = '20px';
+        this.pad.style.right = '20px';
         let e = this;
         setTimeout(function () {
-            e._pad.style.right = '10px';
+            e.pad.style.right = '10px';
         },700);
     }
 
     flow(timeout1,timeout2,maxSn,kds,color){
         let e = this;
         setTimeout(function () {
-            e._sn.innerText = parseInt(e._sn.innerText) - 1;
-            if (parseInt(e._sn.innerText) === -1){
-                if (parseInt(e._fn.innerText) > 0){
-                    e._fn.innerText = parseInt(e._fn.innerText) - 1;
-                    e._sn.innerText = maxSn;
+            e.sn.innerText = parseInt(e.sn.innerText) - 1;
+            if (parseInt(e.sn.innerText) === -1){
+                if (parseInt(e.fn.innerText) > 0){
+                    e.fn.innerText = parseInt(e.fn.innerText) - 1;
+                    e.sn.innerText = maxSn;
                 }
                 else{
-                    dropTime(e._padName,e,kds,sns,color);
+                    dropTime(e.padName,e,kds,sns,color);
                 }
             }
             let sns = setInterval(function () {
-                e._sn.innerText = parseInt(e._sn.innerText) - 1;
-                if (parseInt(e._sn.innerText) === -1){
-                    if (parseInt(e._fn.innerText) > 0){
-                        e._fn.innerText = parseInt(e._fn.innerText) - 1;
-                        e._sn.innerText = maxSn;
+                e.sn.innerText = parseInt(e.sn.innerText) - 1;
+                if (parseInt(e.sn.innerText) === -1){
+                    if (parseInt(e.fn.innerText) > 0){
+                        e.fn.innerText = parseInt(e.fn.innerText) - 1;
+                        e.sn.innerText = maxSn;
                     }
                     else{
-                        dropTime(e._padName,e,kds,sns,color);
+                        dropTime(e.padName,e,kds,sns,color);
                     }
                 }
             },timeout1);
@@ -115,33 +96,28 @@ class Time {
 }
 
 class LastTime{
-    // _lastDays;
-    // _lastHours;
-    // _lastMinuts;
-    // _lastSeconds;
-    // _lastMillSeconds;
 
     constructor(now,targetWeekDay,targetHour) {
         //传入2.8 倒计时不准确  2 - 5 = 3 小于0 则一周时间(到下一周了u)
-        this._lastDays = targetWeekDay - now.getDay() < 0 ? targetWeekDay - now.getDay() + 7 : targetWeekDay - now.getDay();
+        this.lastDays = targetWeekDay - now.getDay() < 0 ? targetWeekDay - now.getDay() + 7 : targetWeekDay - now.getDay();
         //修正1小时
-        this._lastHours = targetHour - 1 - now.getHours();
+        this.lastHours = targetHour - 1 - now.getHours();
         //修正1分钟
-        this._lastMinuts = 59 - now.getMinutes();
+        this.lastMinuts = 59 - now.getMinutes();
 
-        this._lastSeconds = 60 - now.getSeconds();
+        this.lastSeconds = 60 - now.getSeconds();
 
-        this._lastMillSeconds = 1000 - now.getMilliseconds();
-        if (this._lastHours < 0){
-            this._lastDays--;
-            this._lastHours += 24;
+        this.lastMillSeconds = 1000 - now.getMilliseconds();
+        if (this.lastHours < 0){
+            this.lastDays--;
+            this.lastHours += 24;
         }
-        console.log(this._lastDays + " , " + this._lastHours + " , " + this._lastMinuts);
+        console.log(this.lastDays + " , " + this.lastHours + " , " + this.lastMinuts);
         //test
-        // this._lastDays = this._lastHours = 0;
-        // this._lastDays = this._lastHours = 0;
-        // this._lastMinuts = 1;
-        // this._lastSeconds = 0;
+        // this.lastDays = this.lastHours = 0;
+        // this.lastDays = this.lastHours = 0;
+        // this.lastMinuts = 1;
+        // this.lastSeconds = 0;
 
     }
 }
@@ -166,25 +142,25 @@ function openTime(weekDay, hour, padName,changeColor) {
     let kds = setInterval(function () {
         if (++tempKd > 1)
             tempKd = 0;
-        timePart._kd.style.opacity = tempKd;
+        timePart.kd.style.opacity = tempKd;
     },1000);
 
     let lastTime = new LastTime(new Date(),weekDay,hour);
 
-    if (lastTime._lastDays > 0){
-        timePart.setTime(lastTime._lastDays+"",'天',lastTime._lastHours+"",'时');
+    if (lastTime.lastDays > 0){
+        timePart.setTime(lastTime.lastDays+"",'天',lastTime.lastHours+"",'时');
         timePart.setColor(color[0]);
-        timePart.flow(3600000,lastTime._lastMinuts * 60 * 1000,'23',kds,color);
+        timePart.flow(3600000,lastTime.lastMinuts * 60 * 1000,'23',kds,color);
     }
-    else if (lastTime._lastHours > 0){
-        timePart.setTime(lastTime._lastHours+"",'时',lastTime._lastMinuts+"",'分');
+    else if (lastTime.lastHours > 0){
+        timePart.setTime(lastTime.lastHours+"",'时',lastTime.lastMinuts+"",'分');
         timePart.setColor(color[1]);
-        timePart.flow(60000,lastTime._lastSeconds * 1000,'59',kds,color);
+        timePart.flow(60000,lastTime.lastSeconds * 1000,'59',kds,color);
     }
     else{
-        timePart.setTime(lastTime._lastMinuts+"",'分',lastTime._lastSeconds+"",'秒');
+        timePart.setTime(lastTime.lastMinuts+"",'分',lastTime.lastSeconds+"",'秒');
         timePart.setColor(color[2]);
-        timePart.flow(1000,lastTime._lastMillSeconds,'59',kds,color);
+        timePart.flow(1000,lastTime.lastMillSeconds,'59',kds,color);
     }
 }
 
@@ -193,27 +169,27 @@ function dropTime(padName, timePart, kds, sns, color){
     //让中间的指针不再闪
     clearInterval(kds);
     //让中间指针隐藏
-    timePart._kd.style.opacity = '0';
+    timePart.kd.style.opacity = '0';
     //让时间计算停下
     clearInterval(sns);
 
     let targetTime;
     if (padName === 'deadline'){
-        timePart._fn.innerText = '';
-        timePart._fu.innerText = '截';
-        timePart._sn.innerText = '止';
-        timePart._su.innerText = '';
+        timePart.fn.innerText = '';
+        timePart.fu.innerText = '截';
+        timePart.sn.innerText = '止';
+        timePart.su.innerText = '';
         targetTime = [0,2,8,'openline',false];
     }
     else if (padName === 'openline'){
-        timePart._fn.innerText = '';
-        timePart._fu.innerText = '开';
-        timePart._sn.innerText = '放';
-        timePart._su.innerText = '';
+        timePart.fn.innerText = '';
+        timePart.fu.innerText = '开';
+        timePart.sn.innerText = '放';
+        timePart.su.innerText = '';
         targetTime = ['55%',5,12,'deadline',true];
     }
     //倒计时结束，设置背景色
-    timePart._pad.style.backgroundColor = color[3];
+    timePart.pad.style.backgroundColor = color[3];
 
     //关闭更新面板,这个的时间和下面的独立，自己控制
     if (targetTime[4])
@@ -225,12 +201,12 @@ function dropTime(padName, timePart, kds, sns, color){
 
     //一秒钟之后收起这个倒计时
     setTimeout(function () {
-        timePart._pad.style.right = '-200px';
+        timePart.pad.style.right = '-200px';
     },1000);
 
     //两秒钟之后改变上传框高度
     setTimeout(function () {
-        timePart._uploadArea.style.height = targetTime[0];
+        timePart.uploadArea.style.height = targetTime[0];
     },2000);
 
     //三秒钟之后开启另一个倒计时
@@ -242,14 +218,14 @@ function dropTime(padName, timePart, kds, sns, color){
 
 function openUpdateEntrance() {
     if (isPC()){
-        let announcementPad = document.getElementsByClassName('announcementPad')[0];
+        let announcementPad = $('.announcementPad');
 
         setTimeout(function () {
             announcementPad.style.right = '-150px';
         },200);
 
         setTimeout(function () {
-            let anInfo = announcementPad.getElementsByClassName('after')[0];
+            let anInfo = $('.after');
             anInfo.innerText = '收起';
             announcementPad.style.right = '0';
         },1400);
@@ -259,10 +235,10 @@ function openUpdateEntrance() {
 
 function dropUpdateEntrance() {
     if (isPC()){
-        let announcementPad = document.getElementsByClassName('announcementPad')[0];
+        let announcementPad = $('.announcementPad');
 
         setTimeout(function () {
-            let anInfo = announcementPad.getElementsByClassName('after')[0];
+            let anInfo = $('.after');
             anInfo.innerText = '展开';
             announcementPad.style.right = '-150px';
         },1400);

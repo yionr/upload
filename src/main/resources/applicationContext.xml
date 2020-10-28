@@ -17,10 +17,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClassName" value="${spring.datasource.driverClassName}"/>
+        <property name="url" value="${spring.datasource.url}"/>
+        <property name="username" value="${spring.datasource.username}"/>
+        <property name="password" value="${spring.datasource.password}"/>
     </bean>
     <!--配置sqlsessionfactory,使用mybatis-spring包里面的东西-->
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">

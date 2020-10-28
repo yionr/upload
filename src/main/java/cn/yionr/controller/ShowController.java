@@ -21,7 +21,7 @@ public class ShowController {
         return serverFileTool.getFileList().toString();
     }
 
-    @RequestMapping("/showVisitCount")
+    @GetMapping("/showVisitCount")
     public int showVisitCount(){
         return log4jUtils.getVisitCount();
     }
