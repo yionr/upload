@@ -10,3 +10,13 @@ function roll(e) {
         e.innerText = '收起';
     }
 }
+function getAjaxConnection(method,url,readyFunc){
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.open(method,url);
+    xmlHttp.send(null);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
+            readyFunc(xmlHttp);
+        }
+    }
+}

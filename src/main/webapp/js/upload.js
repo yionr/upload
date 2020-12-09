@@ -1,4 +1,4 @@
-$(() =>{
+window.onload = function() {
         //工作日展开上传框和截止时间
         if (isWorkingDay()){
             openUploadEntrance();
@@ -19,14 +19,14 @@ $(() =>{
 
 
 //补充标题
-        $('#week').text(getWeek(new Date(2020,2,4,0,0,0,0).getTime()))
+        document.querySelector('#week').innerHTML = getWeek(new Date(2020,2,4,0,0,0,0).getTime()).toString()
 //input file标签
-        let file = $('#file')
+        let file = document.querySelector('#file')
 //input file 的状态（提示用户文件框是否有文件）
-        let fileInfo = $('#fileInfo');
+        let fileInfo = document.querySelector('#fileInfo');
         let targetName = "";
 
-        file.change(function () {
+        file.onchange =  function () {
             //targetName        完整文件名
             //targetName_pre    文件名，不带后缀
             //targetName_suf    文件名后缀，带.
@@ -47,7 +47,7 @@ $(() =>{
             }
 
             //做动画在这里做
-            let animation = $('#animation');
+            let animation = document.querySelector('#animation');
             let deg = 0;
             fileInfo.remove();
             animation.style.display = 'inline-block';
@@ -60,7 +60,7 @@ $(() =>{
             //只要不是文件夹or无后缀文件，都将文件名上传到服务器进行一次检测，防止学号姓名打错了的情况。
             reviseFileName(targetName_pre,targetName_suf);
 
-        })
+        }
 
         file.ondragenter = function () {
             if (targetName !== "")
@@ -76,11 +76,11 @@ $(() =>{
                 // submit.style.display = "inline-block";
             }
         }
-})
+}
 
 
 function closeParts() {
-    let pcOnly = $('.pcOnly');
+    let pcOnly = document.querySelector('.pcOnly');
     for (let i = 0;i < pcOnly.length;i++){
         pcOnly[i].style.display = 'none';
     }
