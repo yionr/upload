@@ -59,103 +59,82 @@
 
     <div class="serverArea">
         <h3 class="noSelect">如果下方对应位置被点亮,说明服务器已经存在此文件:</h3>
-        <br>
-        <table class="noSelect">
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td class="gray">空缺</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>11</td>
-                <td>12</td>
-                <td>13</td>
-                <td>14</td>
-                <td>15</td>
-                <td>16</td>
-                <td>17</td>
-                <td>18</td>
-                <td>19</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>21</td>
-                <td>22</td>
-                <td>23</td>
-                <td class="gray">空缺</td>
-                <td>25</td>
-                <td>26</td>
-                <td>27</td>
-                <td>28</td>
-                <td>29</td>
-                <td class="gray">空缺</td>
-            </tr>
-            <tr>
-                <td>20160802019</td>
-                <td>20160802004</td>
-            </tr>
-        </table>
+<!--        <table class="noSelect">-->
+<!--            <tr>-->
+<!--                <td>1</td>-->
+<!--                <td>2</td>-->
+<!--                <td>3</td>-->
+<!--                <td>4</td>-->
+<!--                <td class="gray">空缺</td>-->
+<!--                <td>6</td>-->
+<!--                <td>7</td>-->
+<!--                <td>8</td>-->
+<!--                <td>9</td>-->
+<!--                <td>10</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>11</td>-->
+<!--                <td>12</td>-->
+<!--                <td>13</td>-->
+<!--                <td>14</td>-->
+<!--                <td>15</td>-->
+<!--                <td>16</td>-->
+<!--                <td>17</td>-->
+<!--                <td>18</td>-->
+<!--                <td>19</td>-->
+<!--                <td>20</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>21</td>-->
+<!--                <td>22</td>-->
+<!--                <td>23</td>-->
+<!--                <td class="gray">空缺</td>-->
+<!--                <td>25</td>-->
+<!--                <td>26</td>-->
+<!--                <td>27</td>-->
+<!--                <td>28</td>-->
+<!--                <td>29</td>-->
+<!--                <td class="gray">空缺</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>20160802019</td>-->
+<!--                <td>20160802004</td>-->
+<!--            </tr>-->
+<!--        </table>-->
     </div>
 
     <div class="openline noSelect pcOnly">
         <div class="fn"></div> <div class="fu"></div> <div class="kd">:</div> <div class="sn"></div> <div class="su"></div>
         <div class="after"></div>
     </div>
+    <script src="js/jquery-3.5.1.js"></script>
 
     <script>
-        //根据服务器存在的文件填充人员名单
-        (function getStatus() {
-            let xmlHttp = new XMLHttpRequest();
-            //看看把请求改为POST能不能解决Tomcat那个报错
-            xmlHttp.open('GET','show');
-            xmlHttp.send(null);
-            xmlHttp.onreadystatechange = function(){
-                let showList;
-                if (xmlHttp.status === 200 && xmlHttp.readyState === 4) {
-                    //如果服务器还没有文件的话,则直接返回(空返回 内容为'[]' 长度是 2  因为是用 json 交互的)
-                    console.log(xmlHttp.responseText);
-                    if(xmlHttp.responseText.length === 2)
-                        return;
-                    let plist = xmlHttp.responseText.substring(1, xmlHttp.responseText.length - 1);
-                    showList = plist.split(", ");
-                    for (let i = 0; i < showList.length; i++) {
-                        if (showList[i].length < 15) {
-                            let sn = parseInt(showList[i].substring(0, 2)) - 1;
-                            let td = document.getElementsByTagName("td")[sn];
-                            td.innerText = showList[i];
-                            td.className = "green";
-                        } else {
-                            if (showList[i].startsWith("20160802019")) {
-                                let td = document.getElementsByTagName("td")[30];
-                                td.innerText = showList[i];
-                                td.className = "green";
-                            }
-                            if (showList[i].startsWith("20160802004")) {
-                                let td = document.getElementsByTagName("td")[31];
-                                td.innerText = showList[i];
-                                td.className = "green";
-                            }
-                        }
-
-                    }
-                }
+        //生成表格
+        $(()=>{
+            let studentNumber = 30
+            $('.serverArea').append($('<ul class="noSelect"></ul>'))
+            for (let i = 0; i < studentNumber; i++) {
+                $('.serverArea ul').append($(`<li>${i+1}</li>`))
             }
-        })();
-    </script>
-
-    <script>
-        getAjaxConnection('POST','showVisitCount',function (xmlHttp) {
-            let countDiv = document.getElementsByClassName('visitedCount')[0];
-            let countNode = countDiv.getElementsByTagName('span')[0];
-            countNode.innerText = xmlHttp.responseText;
         })
+        //填充表格
+        $(()=> {
+            console.log('start ...');
+            $.get('show', function (data) {
+                data = data.substring(1, data.length - 1).split(',')
+                data.forEach(item => {
+                    let number = parseInt(item.match(/\d+/)[0])
+                    $(`.serverArea ul li:eq(${number-1})`).text(item).addClass('green')
+                })
+            })
+        })
+        //获取并填充访问次数
+        $(
+            $.get('showVisitCount',function(data){
+                $('.visitedCount span').text(data)
+            })
+        )
     </script>
 
     <footer>

@@ -51,5 +51,9 @@
 <%--    <a href="https://upload.yionr.cn">点此返回</a>--%>
     <a href="http://localhost:8080/upload/">点此返回</a>
 </div>
+
+<script>
+    history.pushState(null,'','http://localhost:8080/upload/temp.html')
+</script>
 </body>
 </html>
