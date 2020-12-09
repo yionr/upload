@@ -12,12 +12,14 @@ import java.util.Properties;
 
 @Component
 public class ServerFileTool {
-    @Autowired
-    DateTool dateTool;
-
 
     public Properties properties;
-    {
+
+    DateTool dateTool;
+
+    @Autowired
+    public ServerFileTool(DateTool dateTool) {
+        this.dateTool = dateTool;
         properties = new Properties();
         try {
             properties.load(UploadController.class.getResourceAsStream("/common.properties"));
@@ -25,6 +27,7 @@ public class ServerFileTool {
             e.printStackTrace();
         }
     }
+
     public List<String> getFileList(){
         File file = new File(properties.getProperty("homeWorkRoot") , dateTool.getWeek()+"");
         if (!file.exists())

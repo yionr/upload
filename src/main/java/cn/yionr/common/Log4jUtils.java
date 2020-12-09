@@ -2,6 +2,7 @@ package cn.yionr.common;
 
 import cn.yionr.controller.UploadController;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -9,8 +10,9 @@ import java.util.Properties;
 
 @Component
 public class Log4jUtils {
-    private File logFile;
-    {
+    private final File logFile;
+
+    public Log4jUtils(){
         Properties properties = new Properties();
         try {
             properties.load(UploadController.class.getResourceAsStream("/common.properties"));

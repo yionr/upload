@@ -20,17 +20,20 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 @Controller
+
 public class UploadController {
-    @Autowired
+    private static final Logger logger = Logger.getLogger(UploadController.class);
+
     StudentService studentService;
-
-    @Autowired
     DateTool dateTool;
-
-    @Autowired
     ServerFileTool serverFileTool;
 
-    private Logger logger = Logger.getLogger(UploadController.class);
+    @Autowired
+    public UploadController(StudentService studentService, DateTool dateTool, ServerFileTool serverFileTool) {
+        this.studentService = studentService;
+        this.dateTool = dateTool;
+        this.serverFileTool = serverFileTool;
+    }
 
     @PostMapping("/uploadHomework")
     public String UploadGroupByWeek(MultipartFile file, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileName") String fileName) throws SysException, StudentNotFoundException, IdNotMatchException, NotInTimeException, PermissionDeniedException, SqlQueryException {

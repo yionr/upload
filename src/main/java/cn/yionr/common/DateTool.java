@@ -32,12 +32,10 @@ public class DateTool {
             return true;
         }
         else if (getWeekDay() == DayOfWeek.TUESDAY){
-            if (getHour() >= 8)
-                return true;
+            return getHour() >= 8;
         }
         else if (getWeekDay() == DayOfWeek.FRIDAY){
-            if (getHour() < 12)
-                return true;
+            return getHour() < 12;
         }
         return false;
     }

@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ShowController {
-    @Autowired
+
     ServerFileTool serverFileTool;
+    Log4jUtils log4jUtils;
 
     @Autowired
-    Log4jUtils log4jUtils;
+    public ShowController(ServerFileTool serverFileTool,Log4jUtils log4jUtils){
+        this.serverFileTool = serverFileTool;
+        this.log4jUtils = log4jUtils;
+    }
 
     @GetMapping("/show")
     public String show(){
@@ -21,7 +25,7 @@ public class ShowController {
         return serverFileTool.getFileList().toString();
     }
 
-    @RequestMapping("/showVisitCount")
+    @GetMapping("/showVisitCount")
     public int showVisitCount(){
         return log4jUtils.getVisitCount();
     }

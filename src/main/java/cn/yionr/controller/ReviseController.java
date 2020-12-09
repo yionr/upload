@@ -16,13 +16,17 @@ import java.net.URLDecoder;
 
 @RestController
 public class ReviseController {
-    @Autowired
-    StudentService studentService;
 
-    @Autowired
+    private static final Logger logger = Logger.getLogger(ReviseController.class);
+
+    StudentService studentService;
     DateTool dateTool;
 
-    private Logger logger = Logger.getLogger(ReviseController.class);
+    @Autowired
+    public ReviseController(StudentService studentService, DateTool dateTool) {
+        this.studentService = studentService;
+        this.dateTool = dateTool;
+    }
 
     @PostMapping("revise")
     public String revise(String id, String name, String oFName, HttpServletRequest request) throws UnsupportedEncodingException, SqlQueryException {
