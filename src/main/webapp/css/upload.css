@@ -173,17 +173,17 @@ ul li{
     float: left;
 }
 
-/*table{*/
-/*    margin-left: 3%;*/
-/*}*/
+table{
+    margin-left: 3%;
+}
 
-/*td{*/
-/*    width: 130px;*/
-/*    height: 30px;*/
-/*    text-align: center;*/
-/*    border: 1px gray dotted;*/
-/*    background-color: orange;*/
-/*}*/
+td{
+    width: 130px;
+    height: 30px;
+    text-align: center;
+    border: 1px gray dotted;
+    background-color: orange;
+}
 
 .green{
     background-color: lawngreen;

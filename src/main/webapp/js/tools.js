@@ -33,7 +33,7 @@ function isPC(){
 }
 
 function openUploadEntrance(){
-    let uploadArea = $(".uploadArea");
+    let uploadArea = document.querySelector(".uploadArea");
     uploadArea.style.height = '55%';
 }
 
@@ -218,15 +218,15 @@ function dropTime(padName, timePart, kds, sns, color){
 
 function openUpdateEntrance() {
     if (isPC()){
-        let announcementPad = $('.announcementPad');
+        let announcementPad = document.querySelector('.announcementPad');
 
         setTimeout(function () {
             announcementPad.style.right = '-150px';
         },200);
 
         setTimeout(function () {
-            let anInfo = $('.after');
-            anInfo.innerText = '收起';
+            let anInfo = document.querySelector('.announcementPad .after');
+            anInfo.innerHTML = '收起';
             announcementPad.style.right = '0';
         },1400);
 
@@ -235,10 +235,10 @@ function openUpdateEntrance() {
 
 function dropUpdateEntrance() {
     if (isPC()){
-        let announcementPad = $('.announcementPad');
+        let announcementPad = document.querySelector('.announcementPad');
 
         setTimeout(function () {
-            let anInfo = $('.after');
+            let anInfo = document.querySelector('.after');
             anInfo.innerText = '展开';
             announcementPad.style.right = '-150px';
         },1400);

@@ -155,7 +155,7 @@
     </script>
 
     <script>
-        getAjaxConnection('POST','showVisitCount',function (xmlHttp) {
+        getAjaxConnection('GET','showVisitCount',function (xmlHttp) {
             let countDiv = document.getElementsByClassName('visitedCount')[0];
             let countNode = countDiv.getElementsByTagName('span')[0];
             countNode.innerText = xmlHttp.responseText;
